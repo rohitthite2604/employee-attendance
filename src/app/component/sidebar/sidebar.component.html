@@ -1,0 +1,24 @@
+<div class="relative flex h-screen w-xs flex-col  shadow-xl">
+<!-- Sidebar header -->
+<div class="p-4 mb-6">
+<h5 class="text-xl font-semibold ">CRM DASHBOARD</h5>
+</div>
+
+<!-- Sidebar navigation -->
+<nav class="flex flex-col gap-1 p-2 text-base">
+
+<div *ngFor="let item of sidebarItems" (click)="onItemClick(item)" role="button" class="flex items-center p-3 rounded-lg hover:bg-violet-500 hover:text-white transition-colors duration-200">
+<a class="flex items-center w-full" [routerLink]="item.link">
+<div class="grid mr-4 place-items-center">
+<!-- SVG Icon with dynamic path -->
+<svg [attr.viewBox]="item.icon.viewBox" class="w-5 h-5">
+<path [attr.d]="item.icon.d"></path>
+</svg>
+</div>
+<span>{{ item.name }}</span> <!-- Ensuring the text is white here -->
+</a>
+</div>
+
+
+</nav>
+</div>
