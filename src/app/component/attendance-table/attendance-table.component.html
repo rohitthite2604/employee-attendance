@@ -1,0 +1,25 @@
+<div class="bg-white p-4 rounded-lg shadow-md">
+    <table class="w-full border-collapse">
+      <thead>
+        <tr class="border-b">
+          <th class="text-left p-2">DATE</th>
+          <th class="text-left p-2">CHECK IN</th>
+          <th class="text-left p-2">CHECK OUT</th>
+          <th class="text-left p-2">DURATION</th>
+          <th class="text-left p-2">STATUS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let record of attendanceRecords" class="border-b">
+          <td class="p-2">{{ record.date }}</td>
+          <td class="p-2">{{ record.checkIn }}</td>
+          <td class="p-2">{{ record.checkOut }}</td>
+          <td class="p-2">{{ record.duration }}</td>
+          <td class="p-2">
+            <span [ngClass]="getStatusClass(record.status)">{{ record.status }}</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
