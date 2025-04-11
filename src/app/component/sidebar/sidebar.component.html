@@ -1,24 +1,47 @@
-<div class="relative flex h-screen w-xs flex-col  shadow-xl">
-<!-- Sidebar header -->
-<div class="p-4 mb-6 flex justify-center">
-<h5 class="text-xl font-semibold ">DASHBOARD</h5>
-</div>
+<div class="relative flex h-screen flex-col bg-white shadow-xl transition-all duration-300"
+[ngClass]="{ 'w-64': !isCollapsed, 'w-20': isCollapsed }">
 
-<!-- Sidebar navigation -->
-<nav class="flex flex-col gap-1 p-2 text-base">
+    <button 
+  (click)="isCollapsed = !isCollapsed"
+  class="absolute top-4 right-4 p-2 rounded bg-gray-500 text-white hover:bg-gray-600 transition"
+>
+  <!-- Icon can be something like ≡ or ←/→ -->
+  <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"
+       viewBox="0 0 24 24">
+    <path d="M4 6h16M4 12h16M4 18h16" />
+  </svg>
+</button>
 
-<div *ngFor="let item of sidebarItems" (click)="onItemClick(item)" role="button" class="flex items-center p-3 rounded-lg hover:bg-gray-500 hover:text-white transition-colors duration-200">
-<a class="flex items-center w-full" [routerLink]="item.link">
-<div class="grid mr-4 place-items-center">
-<!-- SVG Icon with dynamic path -->
-<svg [attr.viewBox]="item.icon.viewBox" class="w-5 h-5">
-<path [attr.d]="item.icon.d"></path>
-</svg>
-</div>
-<span>{{ item.name }}</span> 
-</a>
-</div>
-
-
-</nav>
-</div>
+    <!-- Sidebar Header -->
+    <div class="p-6 flex justify-center items-center">
+      <h5 class="text-2xl font-bold tracking-wide text-gray-800" *ngIf="!isCollapsed">Dashboard</h5>
+    </div>
+  
+    <!-- Sidebar Navigation -->
+    <nav class="flex flex-col gap-1 p-4 text-base text-gray-700">
+      <div
+        *ngFor="let item of sidebarItems"
+        (click)="onItemClick(item)"
+        role="button"
+        class="group flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-all duration-200 hover:bg-blue-100 hover:text-blue-700"
+      >
+        <a
+          class="flex items-center w-full"
+          [routerLink]="item.link"
+        >
+          <!-- Icon Wrapper -->
+          <div class="grid place-items-center w-8 h-8 rounded-md bg-blue-50 text-blue-600 group-hover:text-white transition">
+            <svg [attr.viewBox]="item.icon.viewBox" class="w-5 h-5">
+              <path [attr.d]="item.icon.d"></path>
+            </svg>
+          </div>
+  
+          <!-- Item Name -->
+          <span 
+          class="ml-2 font-medium group-hover:font-semibold transition-all duration-200"
+          *ngIf="!isCollapsed">{{ item.name }}</span>
+        </a>
+      </div>
+    </nav>
+  </div>
+  

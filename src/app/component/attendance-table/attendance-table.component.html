@@ -1,25 +1,32 @@
-<div class="bg-white p-4 rounded-lg shadow-md">
-    <table class="w-full border-collapse">
-      <thead>
-        <tr class="border-b">
-          <th class="text-left p-2">DATE</th>
-          <th class="text-left p-2">CHECK IN</th>
-          <th class="text-left p-2">CHECK OUT</th>
-          <th class="text-left p-2">DURATION</th>
-          <th class="text-left p-2">STATUS</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let record of attendanceRecords" class="border-b">
-          <td class="p-2">{{ record.date }}</td>
-          <td class="p-2">{{ record.checkIn }}</td>
-          <td class="p-2">{{ record.checkOut }}</td>
-          <td class="p-2">{{ record.duration }}</td>
-          <td class="p-2">
-            <span [ngClass]="getStatusClass(record.status)">{{ record.status }}</span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  
+<div class="relative overflow-x-auto rounded-lg shadow-md bg-white dark:bg-gray-800">
+  <table class="w-full min-w-md text-base text-left rtl:text-right text-gray-500 dark:text-gray-400">
+    <thead class="text- uppercase bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-400">
+      <tr>
+        <th scope="col" class="px-6 py-3">Date</th>
+        <th scope="col" class="px-6 py-3">Check In</th>
+        <th scope="col" class="px-6 py-3">Check Out</th>
+        <th scope="col" class="px-6 py-3">Duration</th>
+        <th scope="col" class="px-6 py-3">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr 
+        *ngFor="let record of attendanceRecords" 
+        class="bg-white border-b text-black dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700"
+      >
+        <td class="px-6 py-4 font-medium  whitespace-nowrap dark:text-white">{{ record.date }}</td>
+        <td class="px-6 py-4">{{ record.checkIn }}</td>
+        <td class="px-6 py-4">{{ record.checkOut }}</td>
+        <td class="px-6 py-4">{{ record.duration }}</td>
+        <td class="px-6 py-4">
+          <span 
+            class="px-2 py-1 rounded-full font-medium"
+            [ngClass]="getStatusClass(record.status)"
+          >
+            {{ record.status }}
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
