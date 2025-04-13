@@ -1,0 +1,33 @@
+<!-- apply-for-leave.component.html -->
+<div class="bg-gray-50 p-6 rounded-lg shadow-md">
+    <h2 class="text-lg font-semibold mb-4">Apply for Leave</h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label class="block text-sm font-medium">Leave Type</label>
+        <select class="w-full p-2 border rounded-lg">
+          <option>Annual Leave</option>
+          <option>Sick Leave</option>
+          <option>Casual Leave</option>
+        </select>
+      </div>
+  
+      <div>
+        <label class="block text-sm font-medium">Start Date</label>
+        <input type="date" class="w-full p-2 border rounded-lg">
+      </div>
+  
+      <div>
+        <label class="block text-sm font-medium">End Date</label>
+        <input type="date" class="w-full p-2 border rounded-lg">
+      </div>
+  
+      <div class="col-span-1 md:col-span-2">
+        <label class="block text-sm font-medium">Reason</label>
+        <textarea class="w-full p-2 border rounded-lg h-20"></textarea>
+      </div>
+    </div>
+  
+    <button class="bg-blue-600 text-white px-4 py-2 rounded-lg mt-4">Submit Application</button>
+  </div>
+  

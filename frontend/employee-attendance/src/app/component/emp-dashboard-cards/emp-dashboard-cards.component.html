@@ -1,0 +1,30 @@
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+  <!-- Clock In Section -->
+  <div class="bg-white p-4 rounded-xl shadow">
+    <p class="text-gray-500 text-sm">Time</p>
+    <div class="flex justify-between items-center flex-wrap">
+      <h2 class="sm:text-2xl lg:text-3xl font-semibold">{{ currentTime }}</h2>
+      <button class="mt-3 px-4 py-2 bg-green-500 text-white rounded-lg cursor-pointer" (click)="clockIn()">
+        Check In
+      </button>
+    </div>
+  </div>
+
+  <!-- Today's Status -->
+  <div class="bg-white p-4 rounded-xl shadow flex items-center justify-between">
+    <div>
+      <p class="text-gray-500 text-sm">Today's Status</p>
+      <h3 class="text-lg font-semibold text-green-600">Present</h3>
+    </div>
+    <div class="text-green-600 text-2xl">✔️</div>
+  </div>
+
+  <!-- Working Hours -->
+  <div class="bg-white p-4 rounded-xl shadow flex items-center justify-between">
+    <div>
+      <p class="text-gray-500 text-sm">Working Hours</p>
+      <h3 class="text-lg font-semibold">6h 22m</h3>
+    </div>
+    <div class="text-blue-600 text-2xl">⏳</div>
+  </div>
+</div>
