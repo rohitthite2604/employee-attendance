@@ -1,34 +1,34 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../../service/auth.service';
  
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, RouterModule],
+  imports: [FormsModule, RouterModule, CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
   email: string = '';
   password: string = '';
+  errorMessage = '';
  
-  constructor(private router: Router) {}
+  constructor(private authService: AuthService,private router: Router) {}
  
   onSubmit() {
-    // Here you would normally validate credentials with an auth service
-    // For now, we'll just redirect on any submission
-    console.log(this.email);
-    console.log(this.password);
-    if (this.email && this.password) {
-      
-      // Mock successful login
-      localStorage.setItem('isLoggedIn', 'true');
-      // Redirect to dashboard which will include the sidebar
-      this.router.navigate(['/dashboard']);
-    } else {
-      // You could add validation error handling here
-      console.error('Username and password are required');
-    }
+    this.authService.login(this.email, this.password).subscribe({
+      next: (res) => {
+        console.log('Login success:', res);
+        localStorage.setItem('isLoggedIn', 'true');
+        this.router.navigate(['/dashboard']);
+      },
+      error: (err) => {
+        console.error(err);
+        this.errorMessage = 'Invalid email or password';
+      },
+    });
   }
 }

@@ -9,6 +9,7 @@ public class Chapter {
     @Id
     @GeneratedValue
     private Long chId;
+    @SuppressWarnings("unused")
     private String chName;
 
 }

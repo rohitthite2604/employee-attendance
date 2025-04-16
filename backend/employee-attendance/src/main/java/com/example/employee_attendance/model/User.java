@@ -22,9 +22,10 @@ public class User {
     private String address;
 
     @ManyToOne
-    @JoinColumn(name = "chId")
+    @JoinColumn(name = "ch_id")
     private Chapter chapter;
 
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
+    @JoinColumn(name = "role_id")
     private Role role;
 }
