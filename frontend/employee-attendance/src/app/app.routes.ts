@@ -5,6 +5,7 @@ import { AttendanceComponent } from './pages/attendance/attendance.component';
 import { LeaveComponent } from './pages/leave/leave.component';
 import { inject } from '@angular/core';
 import { LoginComponent } from './pages/login/login.component';
+import { SignupComponent } from './pages/signup/signup.component';
 
 
 // Auth guard function (modern approach with functional guards)
@@ -35,6 +36,7 @@ export const routes: Routes = [
     },
 
     { path: '', redirectTo: '/login', pathMatch: 'full' },
+    { path: 'signup', component: SignupComponent },
     // Redirect any unknown paths to login
   { path: '**', redirectTo: '/login' }
 

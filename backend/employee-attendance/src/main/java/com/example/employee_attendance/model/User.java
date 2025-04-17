@@ -21,11 +21,12 @@ public class User {
     private String designation;
     private String address;
 
-    @ManyToOne
-    @JoinColumn(name = "ch_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "ch_id", referencedColumnName = "chId")
     private Chapter chapter;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id")
+    
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Role role;
 }
