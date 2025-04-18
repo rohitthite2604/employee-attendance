@@ -17,7 +17,7 @@ public class UserService {
     private UserRepository userRepository;
 
     @Autowired
-    ChapterRepository chapterRepository;
+    private ChapterRepository chapterRepository;
 
 
      public User register(User user) {

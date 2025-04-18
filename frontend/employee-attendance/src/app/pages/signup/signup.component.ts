@@ -4,6 +4,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
+export enum UserRole {
+  EMPLOYEE = 'EMPLOYEE',
+  HR = 'HR',
+  MANAGER = 'MANAGER'
+}
+
 @Component({
   selector: 'app-signup',
   imports: [ReactiveFormsModule, CommonModule],
@@ -13,6 +19,7 @@ import { Router } from '@angular/router';
 export class SignupComponent implements OnInit {
 
   chapters: any[] = [];
+  roles = Object.values(UserRole);
 
   signupForm: any;
 
@@ -26,7 +33,7 @@ export class SignupComponent implements OnInit {
       designation: [''],
       address: [''],
       chapterId: [null, Validators.required],
-      role: ['EMPLOYEE']
+      role: [null, Validators.required]
     });
   }
 

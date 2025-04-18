@@ -23,6 +23,7 @@ export class LoginComponent {
       next: (res) => {
         console.log('Login success:', res);
         localStorage.setItem('isLoggedIn', 'true');
+        this.authService.setUserRole(res.role);
         this.router.navigate(['/dashboard']);
       },
       error: (err) => {

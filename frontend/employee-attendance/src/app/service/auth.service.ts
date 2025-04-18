@@ -13,4 +13,21 @@ export class AuthService {
   login(email: string, password: string): Observable<any> {
     return this.http.post(this.apiUrl, { email, password });
   }
+
+  setUserRole(role: string): void {
+    localStorage.setItem('userRole', role);
+  }
+
+  getUserRole(): string | null {
+    return localStorage.getItem('userRole');
+  }
+
+  isLoggedIn(): boolean {
+    return localStorage.getItem('isLoggedIn') === 'true';
+  }
+
+  logout(): void {
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('userRole');
+}
 }

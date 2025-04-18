@@ -43,9 +43,8 @@
       <div class="mb-4">
         <label class="block text-sm font-medium mb-1">Role</label>
         <select formControlName="role" class="w-full p-2 border rounded">
-          <option value="EMPLOYEE">EMPLOYEE</option>
-          <option value="HR">HR</option>
-          <option value="Manager">Manager</option>
+          <option [value]="null" disabled selected>Select a Role</option>
+          <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
         </select>
       </div>
   
