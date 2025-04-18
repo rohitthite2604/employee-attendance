@@ -23,8 +23,11 @@
       </div>
   
       <div class="mb-4">
-        <label class="block text-sm font-medium mb-1">Designation</label>
-        <input formControlName="designation" class="w-full p-2 border rounded" />
+        <label class="block text-sm font-medium mb-1">Select Designation</label>
+        <select formControlName="designationId" class="w-full p-2 border rounded">
+          <option [value]="null" disabled selected>Select designation</option>
+          <option *ngFor="let design of designations" [value]="design.designId">{{ design.designName }}</option>
+        </select>
       </div>
   
       <div class="mb-4">

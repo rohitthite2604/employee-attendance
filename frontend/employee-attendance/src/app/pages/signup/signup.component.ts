@@ -19,6 +19,7 @@ export enum UserRole {
 export class SignupComponent implements OnInit {
 
   chapters: any[] = [];
+  designations: any[] = [];
   roles = Object.values(UserRole);
 
   signupForm: any;
@@ -30,7 +31,7 @@ export class SignupComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       dateOfJoining: [''],
-      designation: [''],
+      designationId: [null, Validators.required],
       address: [''],
       chapterId: [null, Validators.required],
       role: [null, Validators.required]
@@ -43,6 +44,11 @@ export class SignupComponent implements OnInit {
       error: (err) => alert('Failed to load chapters')
     });
 
+    this.http.get<any[]>('http://localhost:8080/api/designations').subscribe({
+      next: (data) => this.designations = data,
+      error: (err) => alert('Failed to load designations')
+    });
+
   }
 
   onSubmit() {
@@ -52,9 +58,13 @@ export class SignupComponent implements OnInit {
       ...formValue,
       chapter: {
         chId: formValue.chapterId
+      },
+      designation: {
+        designId: formValue.designationId
       }
     };
     delete requestBody.chapterId;
+    delete requestBody.designationId;
 
     this.http.post('http://localhost:8080/auth/signup', requestBody).subscribe({
       next: res => {

@@ -18,7 +18,11 @@ public class User {
     private String email;
     private String password;
     private LocalDate dateOfJoining;
-    private String designation;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "design_id", referencedColumnName = "designId")
+    private Designation designation;
+
     private String address;
 
     @ManyToOne(fetch = FetchType.EAGER)

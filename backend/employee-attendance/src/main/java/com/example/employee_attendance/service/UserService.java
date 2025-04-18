@@ -1,8 +1,10 @@
 package com.example.employee_attendance.service;
 
 import com.example.employee_attendance.model.Chapter;
+import com.example.employee_attendance.model.Designation;
 import com.example.employee_attendance.model.User;
 import com.example.employee_attendance.repository.ChapterRepository;
+import com.example.employee_attendance.repository.DesignationRepository;
 import com.example.employee_attendance.repository.UserRepository;
 
 import java.time.LocalDate;
@@ -19,6 +21,9 @@ public class UserService {
     @Autowired
     private ChapterRepository chapterRepository;
 
+    @Autowired
+    private DesignationRepository designationRepository;
+
 
      public User register(User user) {
         // Check if the email is already registered
@@ -32,6 +37,13 @@ public class UserService {
 
      // Set the fetched chapter to the user
     user.setChapter(chapter);
+
+         Long designId = user.getDesignation().getDesignId();
+         Designation designation = designationRepository.findById(designId)
+                 .orElseThrow(() -> new RuntimeException("Designation not found with ID: " + designId));
+
+         // Set the fetched chapter to the user
+         user.setDesignation(designation);
 
         // Set the date of joining to the current date if not provided
         if (user.getDateOfJoining() == null) {
