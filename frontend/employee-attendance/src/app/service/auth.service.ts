@@ -22,6 +22,14 @@ export class AuthService {
     return localStorage.getItem('userRole');
   }
 
+  setUserName(userName: string): void {
+    localStorage.setItem('userName', userName);
+  }
+
+  getUserName(): string | null {
+    return localStorage.getItem('userName');
+  }
+
   isLoggedIn(): boolean {
     return localStorage.getItem('isLoggedIn') === 'true';
   }
@@ -29,5 +37,6 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('userRole');
+    localStorage.removeItem('userName');
 }
 }

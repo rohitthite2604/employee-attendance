@@ -7,6 +7,11 @@ import { inject, Injectable } from '@angular/core';
 import { LoginComponent } from './pages/login/login.component';
 import { SignupComponent } from './pages/signup/signup.component';
 import { AuthService } from './service/auth.service';
+import { LeaveRequestsComponent } from './pages/leave-requests/leave-requests.component';
+import { AttendanceRecordsComponent } from './pages/attendance-records/attendance-records.component';
+import { PolicyDocumentsComponent } from './pages/policy-documents/policy-documents.component';
+import { LeaveTypesComponent } from './pages/leave-types/leave-types.component';
+import { PolicyComponent } from './pages/policy/policy.component';
 
 @Injectable({
   providedIn: 'root', // Ensures it's available application-wide
@@ -66,7 +71,37 @@ export const routes: Routes = [
             path: 'leave',
             component: LeaveComponent,
             canActivate: [RoleGuard],
-            data: { roles: ['EMPLOYEE','MANAGER'] }
+            data: { roles: ['EMPLOYEE'] }
+          },
+          {
+            path: 'policy',
+            component: PolicyComponent,
+            canActivate: [RoleGuard],
+            data: { roles: ['EMPLOYEE'] }
+          },
+          {
+            path: 'leave-requests',
+            component: LeaveRequestsComponent,
+            canActivate: [RoleGuard],
+            data: { roles: ['MANAGER'] }
+          },
+          {
+            path: 'attendance-records',
+            component: AttendanceRecordsComponent,
+            canActivate: [RoleGuard],
+            data: { roles: ['MANAGER','HR'] }
+          },
+          {
+            path: 'policy-documents',
+            component: PolicyDocumentsComponent,
+            canActivate: [RoleGuard],
+            data: { roles: ['HR'] }
+          },
+          {
+            path: 'leave-types',
+            component: LeaveTypesComponent,
+            canActivate: [RoleGuard],
+            data: { roles: ['HR'] }
           }
         ]
       },

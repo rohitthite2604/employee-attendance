@@ -24,6 +24,7 @@ export class LoginComponent {
         console.log('Login success:', res);
         localStorage.setItem('isLoggedIn', 'true');
         this.authService.setUserRole(res.role);
+        this.authService.setUserName(res.userName);
         this.router.navigate(['/dashboard']);
       },
       error: (err) => {

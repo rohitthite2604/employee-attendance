@@ -32,19 +32,43 @@ ngOnInit(): void {
         name: 'Attendance History',
         icon: { /* icon data */ },
         link: '/attendance',
-        roles: ['EMPLOYEE', 'HR']
+        roles: ['EMPLOYEE']
       },
       {
         name: 'Apply for Leave',
         icon: { /* icon data */ },
         link: '/leave',
-        roles: ['EMPLOYEE','MANAGER']
+        roles: ['EMPLOYEE']
       },
       {
         name: 'View Policies',
         icon: { /* icon data */ },
         link: '/policy',
         roles: ['EMPLOYEE']
+      },
+      {
+        name: 'Leave Requests',
+        icon: { /* icon data */ },
+        link: '/leave-requests',
+        roles: ['MANAGER']
+      },
+      {
+        name: 'Attendance Records',
+        icon: { /* icon data */ },
+        link: '/attendance-records',
+        roles: ['MANAGER','HR']
+      },
+      {
+        name: 'Leave Types',
+        icon: { /* icon data */ },
+        link: '/leave-types',
+        roles: ['HR']
+      },
+      {
+        name: 'Policy Documents',
+        icon: { /* icon data */ },
+        link: '/policy-documents',
+        roles: ['HR']
       }
     ];
 
