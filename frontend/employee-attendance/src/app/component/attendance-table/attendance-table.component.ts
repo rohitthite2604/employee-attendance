@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { AttendanceRecord, AttendanceService } from '../../service/attendance.service';
 import { AuthService } from '../../service/auth.service';
 import { Subscription } from 'rxjs';
+import { formatDate, formatDuration, formatTime } from '../../utils/formatting.utils';
 
 @Component({
   selector: 'app-attendance-table',
@@ -38,7 +39,13 @@ export class AttendanceTableComponent implements OnInit {
   loadAttendance(): void {
     this.attendanceService.getUserAttendance(this.userId).subscribe(
       (records) => {
-        this.attendanceRecords = [...records]; // Use a new array reference to trigger change detection
+        this.attendanceRecords = records.map(record => ({
+          ...record,
+          date: formatDate(record.date),
+          checkIn: formatTime(record.checkIn),
+          checkOut: record.checkOut ? formatTime(record.checkOut) : '--',
+          duration: record.duration ? formatDuration(record.duration) : '--'
+        }));
       },
       (error) => {
         console.error('Failed to load attendance records', error);

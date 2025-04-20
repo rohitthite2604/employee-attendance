@@ -14,16 +14,24 @@
   <div class="bg-white p-4 rounded-xl shadow flex items-center justify-between">
     <div>
       <p class="text-gray-500 text-sm">Today's Status</p>
-      <h3 class="text-lg font-semibold text-green-600">Present</h3>
+      <h3 class="text-lg font-semibold" *ngIf="todayStatus === 'PRESENT'" class="text-green-600">
+        {{ todayStatus }}
+      </h3>
+      <h3 class="text-lg font-semibold" *ngIf="todayStatus !== 'PRESENT'" class="text-red-600">
+        {{ todayStatus }}
+      </h3>
     </div>
-    <div class="text-green-600 text-2xl">✔️</div>
+    <div class="text-2xl">
+      <span *ngIf="todayStatus === 'PRESENT'" class="text-green-600">✔️</span>
+      <span *ngIf="todayStatus !== 'PRESENT'" class="text-red-600">❌</span>
+    </div>
   </div>
 
   <!-- Working Hours -->
   <div class="bg-white p-4 rounded-xl shadow flex items-center justify-between">
     <div>
       <p class="text-gray-500 text-sm">Working Hours</p>
-      <h3 class="text-lg font-semibold">6h 22m</h3>
+      <h3 class="text-lg font-semibold">{{ workingHours }}</h3>
     </div>
     <div class="text-blue-600 text-2xl">⏳</div>
   </div>

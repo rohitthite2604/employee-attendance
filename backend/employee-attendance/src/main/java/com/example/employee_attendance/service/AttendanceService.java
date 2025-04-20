@@ -26,7 +26,10 @@ public class AttendanceService {
     private UserRepository userRepository;
 
 
-    public Map<String, Object> checkIn(Long userId) {
+    public Map<String, Object> checkIn(Long userId, LocalDate date) {
+        if (date == null) {
+            date = LocalDate.now(); // Default to today's date if no date is provided
+        }
         Optional<Attendance> existingAttendance = attendanceRepository.findByUserIdAndDate(userId, LocalDate.now());
         if (existingAttendance.isPresent()) {
             throw new IllegalStateException("User already checked in today.");
@@ -48,7 +51,10 @@ public class AttendanceService {
         );
     }
 
-    public Map<String, Object> checkOut(Long userId) {
+    public Map<String, Object> checkOut(Long userId, LocalDate date) {
+        if (date == null) {
+            date = LocalDate.now(); // Default to today's date if no date is provided
+        }
         Attendance attendance = attendanceRepository.findByUserIdAndDate(userId, LocalDate.now())
                 .orElseThrow(() -> new RuntimeException("No check-in record found for today."));
     

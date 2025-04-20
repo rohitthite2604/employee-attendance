@@ -1,5 +1,6 @@
 package com.example.employee_attendance.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -27,9 +28,10 @@ public class AttendanceController {
     private AttendanceService attendanceService;
 
     @PostMapping("/check-in")
-public ResponseEntity<?> checkIn(@RequestParam Long userId) {
+public ResponseEntity<?> checkIn(@RequestParam Long userId, @RequestParam(required = false) String date) {
     try {
-        Map<String, Object> response = attendanceService.checkIn(userId);
+        LocalDate parsedDate = date != null ? LocalDate.parse(date) : null;
+        Map<String, Object> response = attendanceService.checkIn(userId, parsedDate);
         return ResponseEntity.ok(response);
     } catch (RuntimeException e) {
         return ResponseEntity.badRequest().body(Map.of(
@@ -40,9 +42,10 @@ public ResponseEntity<?> checkIn(@RequestParam Long userId) {
 }
 
 @PostMapping("/check-out")
-public ResponseEntity<?> checkOut(@RequestParam Long userId) {
+public ResponseEntity<?> checkOut(@RequestParam Long userId, @RequestParam(required = false) String date) {
     try {
-        Map<String, Object> response = attendanceService.checkOut(userId);
+        LocalDate parsedDate = date != null ? LocalDate.parse(date) : null;
+        Map<String, Object> response = attendanceService.checkOut(userId, parsedDate);
         return ResponseEntity.ok(response);
     } catch (RuntimeException e) {
         return ResponseEntity.badRequest().body(Map.of(
