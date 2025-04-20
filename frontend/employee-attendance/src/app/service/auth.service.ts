@@ -14,6 +14,11 @@ export class AuthService {
     return this.http.post(this.apiUrl, { email, password });
   }
 
+  getUserId(): number | null {
+    const userId = localStorage.getItem('userId');
+    return userId ? parseInt(userId, 10) : null;
+  }
+  
   setUserRole(role: string): void {
     localStorage.setItem('userRole', role);
   }
