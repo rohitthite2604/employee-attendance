@@ -1,17 +1,19 @@
 import { Component } from '@angular/core';
 import { LeaveType, LeaveTypeService } from '../../service/leave-type.service';
 import { FormsModule } from '@angular/forms';
-import { NgFor } from '@angular/common';
+import { NgIf } from '@angular/common';
+import { LeaveTypeCardsComponent } from '../../component/leave-type-cards/leave-type-cards.component';
 
 @Component({
   selector: 'app-leave-types',
-  imports: [FormsModule, NgFor],
+  imports: [FormsModule, LeaveTypeCardsComponent, NgIf],
   templateUrl: './leave-types.component.html',
   styleUrl: './leave-types.component.css'
 })
 export class LeaveTypesComponent {
   leaveTypes: LeaveType[] = [];
   newLeaveType = { leaveType: '', totalLeaves: 0 };
+  showPopup = false;
 
   constructor(private leaveTypeService: LeaveTypeService) { }
 
@@ -33,8 +35,17 @@ export class LeaveTypesComponent {
 
     this.leaveTypeService.addLeaveType(this.newLeaveType).subscribe(newType => {
       this.leaveTypes.push(newType); // Add the new leave type to the list
-      this.newLeaveType = { leaveType: '', totalLeaves: 0 }; // Reset the form
+      this.newLeaveType = { leaveType: '', totalLeaves: 0 };
+      this.showPopup = false; // Reset the form
     });
+  }
+
+  openPopup(): void {
+    this.showPopup = true;
+  }
+
+  closePopup(): void {
+    this.showPopup = false;
   }
 
 }

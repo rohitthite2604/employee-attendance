@@ -1,0 +1,9 @@
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div
+      *ngFor="let leaveType of leaveTypes"
+      class="bg-white p-4 rounded-lg shadow-md border border-gray-300"
+    >
+      <h3 class="text-lg font-bold">{{ leaveType.leaveType }}</h3>
+      <p>Total Leaves: {{ leaveType.totalLeaves }}</p>
+    </div>
+  </div>
