@@ -1,1 +1,47 @@
-<p>leave-types works!</p>
+<div class="p-6">
+    <h2 class="text-2xl font-semibold mb-4">Leave Types</h2>
+  
+    <!-- Leave Type Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div
+        *ngFor="let leaveType of leaveTypes"
+        class="bg-white p-4 rounded-lg shadow-md border border-gray-300"
+      >
+        <h3 class="text-lg font-bold">{{ leaveType.leaveType }}</h3>
+        <p>Total Leaves: {{ leaveType.totalLeaves }}</p>
+      </div>
+    </div>
+  
+    <!-- Add Leave Type Form -->
+    <div class="mt-6 bg-white p-4 rounded-lg shadow-md border border-gray-300">
+      <h3 class="text-lg font-bold mb-4">Add Leave Type</h3>
+      <form (ngSubmit)="addLeaveType()">
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-2">Leave Type Name</label>
+          <input
+            type="text"
+            [(ngModel)]="newLeaveType.leaveType"
+            name="leaveType"
+            class="border p-2 rounded-lg w-full"
+            placeholder="Enter leave type name"
+          />
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-2">Total Leaves</label>
+          <input
+            type="number"
+            [(ngModel)]="newLeaveType.totalLeaves"
+            name="totalLeaves"
+            class="border p-2 rounded-lg w-full"
+            placeholder="Enter total leaves"
+          />
+        </div>
+        <button
+          type="submit"
+          class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+        >
+          Add Leave Type
+        </button>
+      </form>
+    </div>
+  </div>

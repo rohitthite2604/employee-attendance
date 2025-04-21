@@ -32,7 +32,7 @@ ngOnInit(): void {
         name: 'Attendance History',
         icon: { /* icon data */ },
         link: '/attendance',
-        roles: ['EMPLOYEE']
+        roles: ['EMPLOYEE','HR','MANAGER']
       },
       {
         name: 'Apply for Leave',

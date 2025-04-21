@@ -66,7 +66,7 @@ export const routes: Routes = [
             path: 'attendance',
             component: AttendanceComponent,
             canActivate: [RoleGuard],
-            data: { roles: ['EMPLOYEE','HR'] }
+            data: { roles: ['EMPLOYEE','HR','MANAGER'] }
           },
           {
             path: 'leave',
