@@ -16,6 +16,7 @@ export class EmpDashboardCardsComponent implements OnInit {
   userId = 0;
   todayStatus: string = 'Absent'; // Default status
   workingHours: string = '0h 0m';
+  private intervalId: any;
 
   constructor(private attendanceService: AttendanceService, private authService: AuthService) {}
 
@@ -32,9 +33,23 @@ export class EmpDashboardCardsComponent implements OnInit {
 
     this.fetchTodayAttendance();
 
+    this.startClock();
+
 
     // Fetch today's attendance status to set the initial state of isCheckedIn
     
+  }
+
+  ngOnDestroy(): void {
+    if (this.intervalId) {
+      clearInterval(this.intervalId); // Clear the interval when the component is destroyed
+    }
+  }
+
+  startClock(): void {
+    this.intervalId = setInterval(() => {
+      this.currentTime = new Date().toLocaleTimeString(); // Update the current time every second
+    }, 1000);
   }
 
   fetchTodayAttendance(): void {
@@ -79,6 +94,7 @@ export class EmpDashboardCardsComponent implements OnInit {
         },  
         (error) => {
           console.error('Check-in failed', error);
+          alert('Already Checked-in');
         }
       );
     } else {

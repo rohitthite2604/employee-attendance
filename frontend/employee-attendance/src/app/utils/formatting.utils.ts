@@ -35,18 +35,20 @@ export function formatDate(dateString: string | Date): string {
       return 'N/A'; // Return 'N/A' for invalid or missing duration
     }
   
-    // Extract minutes and seconds from ISO 8601 duration (e.g., PT1M58.5202214S)
-    const minutesMatch = duration.match(/PT(\d+)M/); // Match minutes (e.g., "1M")
-    const secondsMatch = duration.match(/(\d+(\.\d+)?)S/); // Match seconds (e.g., "58.5202214S")
+    // Extract hours, minutes, and seconds from ISO 8601 duration (e.g., PT6H13M47.0409723S)
+    const hoursMatch = duration.match(/PT(\d+)H/); // Match hours (e.g., "6H")
+    const minutesMatch = duration.match(/(\d+)M/); // Match minutes (e.g., "13M")
+    const secondsMatch = duration.match(/(\d+(\.\d+)?)S/); // Match seconds (e.g., "47.0409723S")
   
+    const hours = hoursMatch ? parseInt(hoursMatch[1], 10) : 0; // Extract hours or default to 0
     const minutes = minutesMatch ? parseInt(minutesMatch[1], 10) : 0; // Extract minutes or default to 0
     const seconds = secondsMatch ? parseFloat(secondsMatch[1]) : 0; // Extract seconds or default to 0
   
     // Convert total duration to hours and minutes
     const totalMinutes = minutes + Math.floor(seconds / 60); // Add seconds converted to minutes
-    const hours = Math.floor(totalMinutes / 60);
+    const totalHours = hours + Math.floor(totalMinutes / 60); // Add minutes converted to hours
     const remainingMinutes = totalMinutes % 60;
   
-    console.log(`Formatted duration: ${hours}h ${remainingMinutes}m`); // Debugging: Log the formatted value
-    return `${hours}h ${remainingMinutes}m`;
+    console.log(`Formatted duration: ${totalHours}h ${remainingMinutes}m`); // Debugging: Log the formatted value
+    return `${totalHours}h ${remainingMinutes}m`;
   }
