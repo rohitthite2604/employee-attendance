@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { AttendanceFilterComponent } from '../../component/attendance-filter/attendance-filter.component';
 import { AttendanceTableComponent } from '../../component/attendance-table/attendance-table.component';
 
 @Component({
   selector: 'app-attendance',
-  imports: [AttendanceFilterComponent, AttendanceTableComponent],
+  imports: [AttendanceTableComponent],
   templateUrl: './attendance.component.html',
   styleUrl: './attendance.component.css'
 })

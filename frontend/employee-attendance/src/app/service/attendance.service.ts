@@ -10,6 +10,28 @@ export interface AttendanceRecord {
   status: string;
 }
 
+export interface AttendanceResponse {
+  date: string;
+  checkIn: string;
+  checkOut: string;
+  duration: string;
+  status: string;
+  user: {
+    userId: number;
+    userName: string;
+    phoneNumber: string;
+    email: string;
+    dateOfJoining: string;
+    designation: string | null;
+    address: string;
+    chapter: {
+      chId: number;
+      chName: string;
+    };
+    role: string;
+  };
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -28,6 +50,10 @@ checkOut(userId: number): Observable<any> {
 
 getUserAttendance(userId: number): Observable<AttendanceRecord[]> {
   return this.http.get<AttendanceRecord[]>(`${this.baseUrl}/user/${userId}`);
+}
+
+getAllAttendance(): Observable<AttendanceResponse[]> {
+  return this.http.get<AttendanceResponse[]>(`${this.baseUrl}/all`);
 }
 
 private attendanceUpdated = new Subject<void>();

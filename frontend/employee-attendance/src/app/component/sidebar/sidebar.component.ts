@@ -41,6 +41,12 @@ ngOnInit(): void {
         roles: ['EMPLOYEE']
       },
       {
+        name: 'Leave Status',
+        icon: { /* icon data */ },
+        link: '/leave-status',
+        roles: ['EMPLOYEE']
+      },
+      {
         name: 'View Policies',
         icon: { /* icon data */ },
         link: '/policy',

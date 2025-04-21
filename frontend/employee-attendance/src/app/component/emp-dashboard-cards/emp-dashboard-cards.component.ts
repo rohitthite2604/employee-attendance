@@ -94,7 +94,7 @@ export class EmpDashboardCardsComponent implements OnInit {
         },  
         (error) => {
           console.error('Check-in failed', error);
-          alert('Already Checked-in');
+          alert('Already checked-in for today');
         }
       );
     } else {

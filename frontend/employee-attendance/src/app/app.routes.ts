@@ -12,6 +12,7 @@ import { AttendanceRecordsComponent } from './pages/attendance-records/attendanc
 import { PolicyDocumentsComponent } from './pages/policy-documents/policy-documents.component';
 import { LeaveTypesComponent } from './pages/leave-types/leave-types.component';
 import { PolicyComponent } from './pages/policy/policy.component';
+import { LeaveStatusPageComponent } from './pages/leave-status-page/leave-status-page.component';
 
 @Injectable({
   providedIn: 'root', // Ensures it's available application-wide
@@ -70,6 +71,12 @@ export const routes: Routes = [
           {
             path: 'leave',
             component: LeaveComponent,
+            canActivate: [RoleGuard],
+            data: { roles: ['EMPLOYEE'] }
+          },
+          {
+            path: 'leave-status',
+            component: LeaveStatusPageComponent,
             canActivate: [RoleGuard],
             data: { roles: ['EMPLOYEE'] }
           },
