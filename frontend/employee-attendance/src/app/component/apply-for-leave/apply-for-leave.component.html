@@ -1,33 +1,64 @@
-<!-- apply-for-leave.component.html -->
-<div class="bg-gray-50 p-6 rounded-lg shadow-md">
-    <h2 class="text-lg font-semibold mb-4">Apply for Leave</h2>
-    
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div>
-        <label class="block text-sm font-medium">Leave Type</label>
-        <select class="w-full p-2 border rounded-lg">
-          <option>Annual Leave</option>
-          <option>Sick Leave</option>
-          <option>Casual Leave</option>
-        </select>
-      </div>
-  
-      <div>
-        <label class="block text-sm font-medium">Start Date</label>
-        <input type="date" class="w-full p-2 border rounded-lg">
-      </div>
-  
-      <div>
-        <label class="block text-sm font-medium">End Date</label>
-        <input type="date" class="w-full p-2 border rounded-lg">
-      </div>
-  
-      <div class="col-span-1 md:col-span-2">
-        <label class="block text-sm font-medium">Reason</label>
-        <textarea class="w-full p-2 border rounded-lg h-20"></textarea>
+<div class="p-6">
+  <h2 class="text-2xl font-semibold mb-4">Apply for Leave</h2>
+
+  <!-- Leave Types -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+    <div
+      *ngFor="let leave of leaveCounts"
+      class="bg-white p-4 rounded-lg shadow-md border border-gray-300"
+    >
+      <h3 class="text-lg font-bold">{{ leave.leaveType.leaveType }}</h3>
+      <p>Total Leaves: {{ leave.leaveType.totalLeaves }}</p>
+      <p>Used Leaves: {{ leave.usedLeaves }}</p>
+      <p>Remaining Leaves: {{ leave.remainingLeaves }}</p>
+    </div>
+  </div>
+
+  <!-- Apply for Leave Form -->
+  <form [formGroup]="applyLeaveForm" (ngSubmit)="applyForLeave()" class="bg-white p-6 rounded-lg shadow-md border border-gray-300">
+    <div class="mb-4">
+      <label class="block text-sm text-black font-medium mb-2">Leave Type</label>
+      <select formControlName="lcId" class="border p-2 rounded-lg w-full">
+        <option value="" disabled selected>Select Leave Type</option>
+        <option *ngFor="let leave of leaveCounts" [value]="leave.lcId">
+          {{ leave.leaveType.leaveType }} (Remaining: {{ leave.remainingLeaves }})
+        </option>
+      </select>
+      <div *ngIf="applyLeaveForm.get('lcId')?.invalid && applyLeaveForm.get('lcId')?.touched" class="text-red-500 text-sm">
+        Leave type is required.
       </div>
     </div>
-  
-    <button class="bg-blue-600 text-white px-4 py-2 rounded-lg mt-4">Submit Application</button>
-  </div>
-  
+
+    <div class="mb-4">
+      <label class="block text-sm font-medium mb-2">Start Date</label>
+      <input type="date" formControlName="startDate" class="border p-2 rounded-lg w-full" />
+      <div *ngIf="applyLeaveForm.get('startDate')?.invalid && applyLeaveForm.get('startDate')?.touched" class="text-red-500 text-sm">
+        Start date is required.
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-sm font-medium mb-2">End Date</label>
+      <input type="date" formControlName="endDate" class="border p-2 rounded-lg w-full" />
+      <div *ngIf="applyLeaveForm.get('endDate')?.invalid && applyLeaveForm.get('endDate')?.touched" class="text-red-500 text-sm">
+        End date is required.
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-sm font-medium mb-2">Description</label>
+      <textarea formControlName="description" class="border p-2 rounded-lg w-full" placeholder="Enter reason for leave"></textarea>
+      <div *ngIf="applyLeaveForm.get('description')?.invalid && applyLeaveForm.get('description')?.touched" class="text-red-500 text-sm">
+        Reason is required.
+      </div>
+    </div>
+
+    <button
+      type="submit"
+      class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+      [disabled]="applyLeaveForm.invalid"
+    >
+      Submit Leave Request
+    </button>
+  </form>
+</div>

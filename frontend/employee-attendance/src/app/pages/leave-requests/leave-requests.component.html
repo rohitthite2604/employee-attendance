@@ -1,1 +1,37 @@
-<p>leave-requests works!</p>
+<div class="relative overflow-x-auto rounded-lg shadow-md bg-white dark:bg-gray-800">
+    <table class="w-full min-w-md text-base text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      <thead class="uppercase bg-gray-100 dark:bg-gray-200 dark:text-black">
+        <tr>
+          <th scope="col" class="px-6 py-3">User Name</th>
+          <th scope="col" class="px-6 py-3">Leave Type</th>
+          <th scope="col" class="px-6 py-3">Applied Date</th>
+          <th scope="col" class="px-6 py-3">Start Date</th>
+          <th scope="col" class="px-6 py-3">End Date</th>
+          <th scope="col" class="px-6 py-3">Description</th>
+          <th scope="col" class="px-6 py-3">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr 
+          *ngFor="let request of leaveRequests" 
+          class="bg-white border-b text-black dark:bg-gray-100 dark:border-gray-500 hover:bg-gray-50 dark:hover:bg-gray-200"
+        >
+          <td class="px-6 py-4 font-medium whitespace-nowrap dark:text-black">{{ request.employee.userName }}</td>
+          <td class="px-6 py-4">{{ request.leaveCount.leaveType.leaveType }}</td>
+          <td class="px-6 py-4">{{ request.appliedDate }}</td>
+          <td class="px-6 py-4">{{ request.startDate }}</td>
+          <td class="px-6 py-4">{{ request.endDate }}</td>
+          <td class="px-6 py-4">{{ request.description || 'N/A' }}</td>
+          <td class="px-6 py-4">
+            <span 
+              class="px-2 py-1 rounded-full font-medium"
+              [ngClass]="getStatusClass(request.status)"
+            >
+              {{ request.status }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
