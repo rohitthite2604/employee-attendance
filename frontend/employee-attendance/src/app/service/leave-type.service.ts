@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 export interface LeaveType {
-  id: number;
+  ltId: number;
   leaveType: string;
   totalLeaves: number;
 }
@@ -22,5 +22,13 @@ export class LeaveTypeService {
 
   addLeaveType(leaveType: {leaveType: string, totalLeaves: number}): Observable<LeaveType> {
     return this.http.post<LeaveType>(`${this.baseUrl}`, leaveType);
+  }
+
+  updateLeaveType(ltId: number, leaveType: { leaveType: string; totalLeaves: number }): Observable<LeaveType> {
+    return this.http.put<LeaveType>(`${this.baseUrl}/${ltId}`, leaveType);
+  }
+
+  deleteLeaveType(ltId: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${ltId}`);
   }
 }

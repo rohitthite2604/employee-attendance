@@ -34,7 +34,7 @@ export class LeaveTypesComponent {
     }
 
     this.leaveTypeService.addLeaveType(this.newLeaveType).subscribe(newType => {
-      this.leaveTypes.push(newType); // Add the new leave type to the list
+      this.fetchLeaveTypes(); // Add the new leave type to the list
       this.newLeaveType = { leaveType: '', totalLeaves: 0 };
       this.showPopup = false; // Reset the form
     });

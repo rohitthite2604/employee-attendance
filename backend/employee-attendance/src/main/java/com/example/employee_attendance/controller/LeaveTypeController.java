@@ -7,6 +7,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 @RestController
 @RequestMapping("/api/leave-types")
@@ -27,5 +31,21 @@ public class LeaveTypeController {
         List<LeaveType> leaveTypes = leaveTypeService.getAllLeaveTypes();
         return ResponseEntity.ok(leaveTypes);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<LeaveType> updateLeaveType(@PathVariable Long id, @RequestBody LeaveType leaveType) {
+        return leaveTypeService.updateLeaveType(id, leaveType)
+                .map(updatedLeaveType -> ResponseEntity.ok(updatedLeaveType))
+                .orElse(ResponseEntity.notFound().build());
+
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteLeaveType(@PathVariable Long id){
+        boolean isDeleted = leaveTypeService.deleteLeaveType(id);
+        return  isDeleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
+    }
+    
+    
 
 }
