@@ -20,8 +20,8 @@ public class LeaveRequest {
     private User employee;
 
     @ManyToOne
-    @JoinColumn(name = "ltId")
-    private LeaveType leaveType;
+    @JoinColumn(name = "leaveCountId")
+    private LeaveCount leaveCount;
 
     @ManyToOne
     @JoinColumn(name = "mId")

@@ -28,4 +28,6 @@ public class LeaveTypeController {
         return ResponseEntity.ok(leaveTypes);
     }
 
+    
+
 }
