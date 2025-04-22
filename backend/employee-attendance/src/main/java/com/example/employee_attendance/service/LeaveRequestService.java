@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LeaveRequestService {
@@ -41,5 +43,17 @@ public class LeaveRequestService {
 
         leaveCountRepository.save(leaveCount);
         return leaveRequestRepository.save(leaveRequest);
+    }
+
+    public List<LeaveRequest> getAllLeaveRequests() {
+        return leaveRequestRepository.findAll();
+    }
+
+    public Optional<LeaveRequest> getLeaveRequestById(Long id) {
+        return leaveRequestRepository.findById(id);
+    }
+
+    public List<LeaveRequest> getLeaveRequestsByUserId(Long userId) {
+        return leaveRequestRepository.findByEmployee_UserId(userId);
     }
 }
