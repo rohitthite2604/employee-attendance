@@ -17,4 +17,8 @@ export class LeaveRequestService {
   applyForLeave(payload: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/leave-requests/apply`, payload);
   }
+
+  assignLeaveTypes(userId: number): Observable<any> {
+    return this.http.post(`${this.baseUrl}/leave-counts/assign`, { userId });
+  }
 }

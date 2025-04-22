@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { LeaveRequestService } from '../../service/leave-request.service';
 
 export enum UserRole {
   EMPLOYEE = 'EMPLOYEE',
@@ -24,7 +25,7 @@ export class SignupComponent implements OnInit {
 
   signupForm: any;
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private leaveRequestService: LeaveRequestService) {
     this.signupForm = this.fb.group({
       userName: ['', Validators.required],
       phoneNumber: ['', Validators.required],
@@ -68,12 +69,18 @@ export class SignupComponent implements OnInit {
 
     this.http.post('http://localhost:8080/auth/signup', requestBody).subscribe({
       next: res => {
+        const userId = (res as { userId: number }).userId;
         alert('User registered! 🎉');
-        this.router.navigate(['/login']); // Redirect to login page
-      },
-      error: err => alert('Error: ' + err.message)
+        this.router.navigate(['/login']);
+        this.leaveRequestService.assignLeaveTypes(userId).subscribe({
+          next: (response) => {
+            console.log('Assign Leave Types Response:', response); 
+            alert('Leave types assigned successfully!');
+             // Redirect to login page
+          }
+        });
+      }
     });
-
   }
 
 }
