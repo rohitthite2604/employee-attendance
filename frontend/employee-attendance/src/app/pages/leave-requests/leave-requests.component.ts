@@ -19,6 +19,15 @@ export class LeaveRequestsComponent implements OnInit {
   });
 }
 
+updateStatus(lrId: number, status: string): void {
+  this.leaveRequestService.updateLeaveStatus(lrId, status).subscribe(updatedRequest => {
+    const index = this.leaveRequests.findIndex(lr => lr.lrId === lrId);
+    if (index !== -1) {
+      this.leaveRequests[index] = updatedRequest;
+    }
+  });
+}
+
 getStatusClass(status: string): string {
   switch (status.toLowerCase()) {
     case 'Approved':

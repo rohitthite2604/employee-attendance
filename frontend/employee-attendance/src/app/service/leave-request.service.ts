@@ -64,4 +64,8 @@ export class LeaveRequestService {
   getLeaveRequestsByUserId(userId: number): Observable<LeaveRequestByUser[]> {
     return this.http.get<LeaveRequestByUser[]>(`${this.baseUrl}/leave-requests/user/${userId}`);
   }
+
+  updateLeaveStatus(lrId: number, status: string): Observable<LeaveRequest> {
+    return this.http.put<LeaveRequest>(`${this.baseUrl}/leave-requests/status/${lrId}?status=${status}`, {});
+  }
 }

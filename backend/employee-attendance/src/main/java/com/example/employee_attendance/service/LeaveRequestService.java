@@ -56,4 +56,15 @@ public class LeaveRequestService {
     public List<LeaveRequest> getLeaveRequestsByUserId(Long userId) {
         return leaveRequestRepository.findByEmployee_UserId(userId);
     }
+
+    public LeaveRequest updateLeaveStatus(Long lrId, String status){
+        Optional<LeaveRequest> optLeaveRequest = leaveRequestRepository.findById(lrId);
+        if(optLeaveRequest.isPresent()){
+            LeaveRequest leaveRequest = optLeaveRequest.get();
+            leaveRequest.setStatus(status);
+            return leaveRequestRepository.save(leaveRequest);
+        } else {
+            throw new RuntimeException("Leave Request not found");
+        }
+    }
 }

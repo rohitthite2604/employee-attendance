@@ -51,4 +51,9 @@ public class LeaveRequestController {
         }
         return ResponseEntity.ok(leaveRequests);
     }
+
+    @PutMapping("/status/{lrId}")
+    public LeaveRequest updateLeaveStatus(@PathVariable Long lrId, @RequestParam String status) {
+        return leaveRequestService.updateLeaveStatus(lrId, status);
+    }
 }
