@@ -3,6 +3,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { LeaveRequestService } from '../../service/leave-request.service';
 import { NgFor, NgIf } from '@angular/common';
 import { AuthService } from '../../service/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-apply-for-leave',
@@ -15,7 +16,7 @@ export class ApplyForLeaveComponent {
   applyLeaveForm: FormGroup; // Form for applying for leave
   userId = 0;
 
-  constructor(private leaveRequestService: LeaveRequestService, private authService: AuthService) {
+  constructor(private leaveRequestService: LeaveRequestService, private authService: AuthService, private router: Router) {
     this.applyLeaveForm = new FormGroup({
       lcId: new FormControl('', [Validators.required]),
       startDate: new FormControl('', [Validators.required]),
@@ -61,6 +62,7 @@ export class ApplyForLeaveComponent {
     this.leaveRequestService.applyForLeave(payload).subscribe(
       response => {
         alert('Leave request submitted successfully.');
+        this.router.navigate(['/leave-status']);
         this.applyLeaveForm.reset(); // Reset the form
       },
       error => {

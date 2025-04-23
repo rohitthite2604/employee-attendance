@@ -3,6 +3,7 @@ import { AttendanceService } from '../../service/attendance.service';
 import { AuthService } from '../../service/auth.service';
 import { formatDate, formatDuration, formatTime } from '../../utils/formatting.utils';
 import { NgIf } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-emp-dashboard-cards',
@@ -92,9 +93,13 @@ export class EmpDashboardCardsComponent implements OnInit {
           this.fetchTodayAttendance();
           this.attendanceService.notifyAttendanceUpdated();// Add delay to ensure backend updates
         },  
-        (error) => {
+        (error: HttpErrorResponse) => {
           console.error('Check-in failed', error);
-          alert('Already checked-in for today');
+          if (error.error && error.error.message) {
+            alert(error.error.message);
+          } else {
+            alert('Check-in failed. Please try again.');
+          }
         }
       );
     } else {

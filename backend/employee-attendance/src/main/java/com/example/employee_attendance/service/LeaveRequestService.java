@@ -1,7 +1,11 @@
 package com.example.employee_attendance.service;
 
+import com.example.employee_attendance.model.Attendance;
+import com.example.employee_attendance.model.AttendanceStatus;
 import com.example.employee_attendance.model.LeaveCount;
 import com.example.employee_attendance.model.LeaveRequest;
+import com.example.employee_attendance.model.User;
+import com.example.employee_attendance.repository.AttendanceRepository;
 import com.example.employee_attendance.repository.LeaveCountRepository;
 import com.example.employee_attendance.repository.LeaveRequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +23,9 @@ public class LeaveRequestService {
 
     @Autowired
     private LeaveCountRepository leaveCountRepository;
+
+    @Autowired
+    private AttendanceRepository attendanceRepository;
 
     public LeaveRequest applyForLeave(Long userId, Long lcId, LocalDate startDate, LocalDate endDate, String description) {
         LeaveCount leaveCount = leaveCountRepository.findById(lcId)
@@ -62,9 +69,25 @@ public class LeaveRequestService {
         if(optLeaveRequest.isPresent()){
             LeaveRequest leaveRequest = optLeaveRequest.get();
             leaveRequest.setStatus(status);
-            return leaveRequestRepository.save(leaveRequest);
-        } else {
-            throw new RuntimeException("Leave Request not found");
+            LeaveRequest updatedLeaveRequest = leaveRequestRepository.save(leaveRequest);
+
+        if ("Approved".equalsIgnoreCase(status)) {
+            LocalDate startDate = leaveRequest.getStartDate();
+            LocalDate endDate = leaveRequest.getEndDate();
+            User employee = leaveRequest.getEmployee();
+
+            for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
+                Attendance attendance = new Attendance();
+                attendance.setUser(employee);
+                attendance.setDate(date);
+                attendance.setStatus(AttendanceStatus.ON_LEAVE);
+                attendanceRepository.save(attendance);
+            }
         }
+
+        return updatedLeaveRequest;
+    } else {
+        throw new RuntimeException("Leave Request not found");
+    }
     }
 }

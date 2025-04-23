@@ -32,8 +32,13 @@ public class AttendanceService {
         }
         Optional<Attendance> existingAttendance = attendanceRepository.findByUserIdAndDate(userId, LocalDate.now());
         if (existingAttendance.isPresent()) {
+            Attendance existing = existingAttendance.get();
+            if (existing.getStatus() == AttendanceStatus.ON_LEAVE) {
+                throw new IllegalStateException("User is on leave today. Cannot mark attendance.");
+            }
             throw new IllegalStateException("User already checked in today.");
         }
+        
     
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
