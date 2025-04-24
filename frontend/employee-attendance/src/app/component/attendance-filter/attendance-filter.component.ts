@@ -3,6 +3,7 @@ import * as XLSX from 'xlsx';
 import FileSaver from 'file-saver';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import { formatDate, formatDuration, formatTime } from '../../utils/formatting.utils';
 
 @Component({
   selector: 'app-attendance-filter',
@@ -27,10 +28,10 @@ export class AttendanceFilterComponent {
     }
     const flattenedRecords = records.map(record => ({
       Username: record.user.userName,
-      Date: record.date,
-      'Check In': record.checkIn,
-      'Check Out': record.checkOut,
-      Duration: record.duration,
+      Date: formatDate(record.date),
+      'Check In': formatTime(record.checkIn),
+      'Check Out': formatTime(record.checkOut),
+      Duration: formatDuration(record.duration),
       Status: record.status
     }));
     const worksheet = XLSX.utils.json_to_sheet(flattenedRecords);

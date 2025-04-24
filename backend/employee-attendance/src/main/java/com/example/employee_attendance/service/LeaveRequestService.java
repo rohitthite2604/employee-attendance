@@ -83,6 +83,12 @@ public class LeaveRequestService {
                 attendance.setStatus(AttendanceStatus.ON_LEAVE);
                 attendanceRepository.save(attendance);
             }
+        }else if ("Rejected".equalsIgnoreCase(status)) {
+            LeaveCount leaveCount = leaveRequest.getLeaveCount();
+            int daysRequested = (int) (leaveRequest.getEndDate().toEpochDay() - leaveRequest.getStartDate().toEpochDay()) + 1;
+            leaveCount.setUsedLeaves(leaveCount.getUsedLeaves() - daysRequested);
+            leaveCount.setRemainingLeaves(leaveCount.getRemainingLeaves() + daysRequested);
+            leaveCountRepository.save(leaveCount);
         }
 
         return updatedLeaveRequest;

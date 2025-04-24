@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LeaveRequest, LeaveRequestService } from '../../service/leave-request.service';
 import { NgClass, NgFor } from '@angular/common';
+import { formatDate } from '../../utils/formatting.utils';
 
 @Component({
   selector: 'app-leave-requests',
@@ -15,7 +16,12 @@ export class LeaveRequestsComponent implements OnInit {
 
   ngOnInit(): void {
     this.leaveRequestService.getLeaveRequests().subscribe(data => {
-      this.leaveRequests = data;
+      this.leaveRequests = data.map(request => ({
+        ...request,
+        appliedDate: formatDate(request.appliedDate),
+        startDate: formatDate(request.startDate),
+        endDate: formatDate(request.endDate)
+      }));
   });
 }
 
@@ -30,9 +36,9 @@ updateStatus(lrId: number, status: string): void {
 
 getStatusClass(status: string): string {
   switch (status.toLowerCase()) {
-    case 'Approved':
+    case 'approved':
       return 'bg-green-100 text-green-800';
-    case 'Rejected':
+    case 'rejected':
       return 'bg-yellow-100 text-yellow-800';
     default:
       return 'bg-gray-100 text-gray-800';

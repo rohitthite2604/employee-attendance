@@ -42,7 +42,7 @@ export class AttendanceTableComponent implements OnInit {
         this.attendanceRecords = records.map(record => ({
           ...record,
           date: formatDate(record.date),
-          checkIn: formatTime(record.checkIn),
+          checkIn: record.checkIn ? formatTime(record.checkIn) : '--',
           checkOut: record.checkOut ? formatTime(record.checkOut) : '--',
           duration: record.duration ? formatDuration(record.duration) : '--'
         }));
