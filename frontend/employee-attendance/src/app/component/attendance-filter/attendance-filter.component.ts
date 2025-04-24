@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import * as XLSX from 'xlsx';
 import FileSaver from 'file-saver';
-import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { formatDate, formatDuration, formatTime } from '../../utils/formatting.utils';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-attendance-filter',
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './attendance-filter.component.html',
   styleUrl: './attendance-filter.component.css'
 })
@@ -15,10 +15,17 @@ export class AttendanceFilterComponent {
 
   @Input() records: any[] = [];
   @Output() filterChanged = new EventEmitter<string>(); // Emits the selected value
+  @Output() searchChanged = new EventEmitter<string>(); // Emits the search term
+
+  searchText: string = '';
 
   onFilterChange(event: Event) {
     const filterValue = (event.target as HTMLSelectElement).value;
     this.filterChanged.emit(filterValue); // Sends the selected filter value
+  }
+
+  onSearchChange() {
+    this.searchChanged.emit(this.searchText);
   }
 
   exportToExcel(records: any[]) {
@@ -30,10 +37,10 @@ export class AttendanceFilterComponent {
     .sort((a,b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .map(record => ({
       Username: record.user.userName,
-      Date: formatDate(record.date),
-      'Check In': record.checkIn ? formatTime(record.checkIn) : "--",
-      'Check Out': record.checkOut ? formatTime(record.checkOut) : "--",
-      Duration: record.duration ? formatDuration(record.duration) : "--",
+      Date: record.date || "--",
+      'Check In': record.checkIn || "--",
+      'Check Out': record.checkOut || "--",
+      Duration: record.duration || "--",
       Status: record.status
     }));
     const worksheet = XLSX.utils.json_to_sheet(flattenedRecords);

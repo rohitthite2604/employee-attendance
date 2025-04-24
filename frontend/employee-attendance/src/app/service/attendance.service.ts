@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 export interface AttendanceRecord {
   date: string;
@@ -63,4 +63,11 @@ private attendanceUpdated = new Subject<void>();
     this.attendanceUpdated.next();
   }
 
+  private filteredRecordsSubject = new BehaviorSubject<AttendanceResponse[]>([]);
+  filteredRecords$ = this.filteredRecordsSubject.asObservable();
+
+  updateFilteredRecords(records: AttendanceResponse[]) {
+    this.filteredRecordsSubject.next(records);
+
+}
 }

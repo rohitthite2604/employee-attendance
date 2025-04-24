@@ -1,6 +1,14 @@
 <div class="p-6">
 <div class="bg-white p-4 rounded-lg shadow-md min-w-sm flex items-center justify-between mb-4">
+  <input
+    type="text"
+    [(ngModel)]="searchText"
+    (input)="onSearchChange()"
+    placeholder="Search by Name"
+    class="border p-2 rounded-lg mr-4"
+  />
   <select class="border p-2 rounded-lg" (change)="onFilterChange($event)">
+    <option value="1">Last 1 day</option>
     <option value="7">Last 7 days</option>
     <option value="30">Last 30 days</option>
     <option value="all">All Time</option>

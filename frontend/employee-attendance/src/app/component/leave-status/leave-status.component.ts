@@ -28,6 +28,7 @@ export class LeaveStatusComponent implements OnInit{
       (data) => {
         this.leaveRequestsByUser = data.map((request) => ({
           ...request,
+          appliedDate: formatDate(request.appliedDate),
           startDate: formatDate(request.startDate),
           endDate: formatDate(request.endDate)
       }));
