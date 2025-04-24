@@ -39,7 +39,9 @@ export class AttendanceTableComponent implements OnInit {
   loadAttendance(): void {
     this.attendanceService.getUserAttendance(this.userId).subscribe(
       (records) => {
-        this.attendanceRecords = records.map(record => ({
+        this.attendanceRecords = records
+        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+        .map(record => ({
           ...record,
           date: formatDate(record.date),
           checkIn: record.checkIn ? formatTime(record.checkIn) : '--',

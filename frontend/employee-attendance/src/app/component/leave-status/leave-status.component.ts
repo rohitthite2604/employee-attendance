@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LeaveRequestByUser, LeaveRequestService } from '../../service/leave-request.service';
 import { AuthService } from '../../service/auth.service';
 import { NgClass, NgFor } from '@angular/common';
+import { formatDate } from '../../utils/formatting.utils';
 
 @Component({
   selector: 'app-leave-status',
@@ -25,7 +26,11 @@ export class LeaveStatusComponent implements OnInit{
 
     this.leaveRequestService.getLeaveRequestsByUserId(userId).subscribe(
       (data) => {
-        this.leaveRequestsByUser = data;
+        this.leaveRequestsByUser = data.map((request) => ({
+          ...request,
+          startDate: formatDate(request.startDate),
+          endDate: formatDate(request.endDate)
+      }));
       },
       (error) => {
         console.error('Error fetching leave requests:', error);

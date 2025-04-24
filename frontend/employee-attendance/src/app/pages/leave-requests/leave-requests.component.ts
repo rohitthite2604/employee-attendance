@@ -16,7 +16,9 @@ export class LeaveRequestsComponent implements OnInit {
 
   ngOnInit(): void {
     this.leaveRequestService.getLeaveRequests().subscribe(data => {
-      this.leaveRequests = data.map(request => ({
+      this.leaveRequests = data
+      .sort((a,b) => new Date(b.appliedDate).getTime() - new Date(a.appliedDate).getTime())
+      .map(request => ({
         ...request,
         appliedDate: formatDate(request.appliedDate),
         startDate: formatDate(request.startDate),

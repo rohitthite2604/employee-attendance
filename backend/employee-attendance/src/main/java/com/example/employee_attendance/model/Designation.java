@@ -12,7 +12,6 @@ public class Designation {
     @Id
     @GeneratedValue
     private Long designId;
-    @SuppressWarnings("unused")
     @Column(name = "design_name")
     private String designName;
 

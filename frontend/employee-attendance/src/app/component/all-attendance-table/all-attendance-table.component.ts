@@ -16,7 +16,9 @@ export class AllAttendanceTableComponent {
   constructor(private attendanceService: AttendanceService) { }
   ngOnInit() {
     this.attendanceService.getAllAttendance().subscribe(data => {
-      this.attendanceRecords = data.map(record => ({
+      this.attendanceRecords = data
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .map(record => ({
         ...record,
         date: formatDate(record.date),
         checkIn: record.checkIn ? formatTime(record.checkIn) : '--',
