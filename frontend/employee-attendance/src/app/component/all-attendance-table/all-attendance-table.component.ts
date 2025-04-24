@@ -2,17 +2,20 @@ import { Component, Input } from '@angular/core';
 import { AttendanceResponse, AttendanceService } from '../../service/attendance.service';
 import { formatDate, formatDuration, formatTime } from '../../utils/formatting.utils';
 import { NgClass, NgFor } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-all-attendance-table',
-  imports: [NgFor, NgClass],
+  imports: [NgFor, NgClass, FormsModule],
   templateUrl: './all-attendance-table.component.html',
   styleUrl: './all-attendance-table.component.css'
 })
 export class AllAttendanceTableComponent {
   @Input() records: any[] = [];
-
+  filteredRecords: AttendanceResponse[] = [];
+  searchText: string = '';
   attendanceRecords: AttendanceResponse[] = [];
+
   constructor(private attendanceService: AttendanceService) { }
   ngOnInit() {
     this.attendanceService.getAllAttendance().subscribe(data => {
@@ -25,7 +28,16 @@ export class AllAttendanceTableComponent {
         checkOut: record.checkOut ? formatTime(record.checkOut) : '--',
         duration: record.duration ? formatDuration(record.duration) : '--'
       }));
+      this.filteredRecords = this.attendanceRecords;
+
     });
+  }
+
+  onSearchChange() {
+    const search = this.searchText.toLowerCase();
+    this.filteredRecords = this.attendanceRecords.filter(record =>
+      record.user.userName.toLowerCase().includes(search)
+    );
   }
 
   getStatusClass(status: string): string {

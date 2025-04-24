@@ -26,12 +26,14 @@ export class AttendanceFilterComponent {
       console.error('No records available to export.');
       return;
     }
-    const flattenedRecords = records.map(record => ({
+    const flattenedRecords = records
+    .sort((a,b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .map(record => ({
       Username: record.user.userName,
       Date: formatDate(record.date),
-      'Check In': formatTime(record.checkIn),
-      'Check Out': formatTime(record.checkOut),
-      Duration: formatDuration(record.duration),
+      'Check In': record.checkIn ? formatTime(record.checkIn) : "--",
+      'Check Out': record.checkOut ? formatTime(record.checkOut) : "--",
+      Duration: record.duration ? formatDuration(record.duration) : "--",
       Status: record.status
     }));
     const worksheet = XLSX.utils.json_to_sheet(flattenedRecords);

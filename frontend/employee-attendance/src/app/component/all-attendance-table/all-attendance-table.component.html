@@ -1,4 +1,11 @@
 <div class="p-6">
+  <input
+    type="text"
+    [(ngModel)]="searchText"
+    (input)="onSearchChange()"
+    placeholder="Search by username"
+    class="mb-4 p-2 border border-gray-300 rounded"
+  />
     <div class="relative overflow-x-auto rounded-lg shadow-md bg-white dark:bg-gray-800">
         <table class="w-full min-w-md text-base text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead class="uppercase bg-gray-100 dark:bg-gray-200 dark:text-black">
@@ -13,7 +20,7 @@
           </thead>
           <tbody>
             <tr 
-              *ngFor="let record of attendanceRecords" 
+              *ngFor="let record of filteredRecords" 
               class="bg-white border-b text-black dark:bg-gray-100 dark:border-gray-500 hover:bg-gray-50 dark:hover:bg-gray-200"
             >
               <td class="px-6 py-4 font-medium whitespace-nowrap dark:text-black">{{ record.user.userName }}</td>
