@@ -16,6 +16,7 @@ export class AttendanceRecordsComponent implements OnInit {
   attendanceRecords: AttendanceResponse[] = [];
   filteredRecords: AttendanceResponse[] = [];
   searchText: string = '';
+  selectedDays: string = 'all';
 
   constructor(private attendanceService: AttendanceService) {}
 
@@ -27,38 +28,42 @@ export class AttendanceRecordsComponent implements OnInit {
     });
   }
 
-  onFilterChange(filterValue: string): void {
-    const days = parseInt(filterValue, 10);
-    if (isNaN(days)) {
-      this.filteredRecords = this.attendanceRecords; // Show all records
-    } else {
-      const cutoffDate = new Date();
-      cutoffDate.setDate(cutoffDate.getDate() - days);
-      this.filteredRecords = this.attendanceRecords.filter(record =>
-        new Date(record.date) >= cutoffDate
-      );
-    }
+  onFilterChange(days: string): void {
+    this.selectedDays = days;
     this.applyFilters();
   }
 
-  onSearchChange(searchTerm: string): void {
-    this.searchText = searchTerm.toLowerCase();
+  onSearchChange(searchText: string): void {
+    this.searchText = searchText;
     this.applyFilters();
   }
 
-  private applyFilters(): void {
-    const search = this.searchText.toLowerCase();
+  applyFilters(): void {
+    const now = new Date();
+
     this.filteredRecords = this.attendanceRecords
-      .filter(record => record.user.userName.toLowerCase().includes(search))
-      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .filter(record => {
+        const matchesSearch = record.user.userName.toLowerCase().includes(this.searchText.toLowerCase());
+
+        let withinDays = true;
+        if (this.selectedDays !== 'all') {
+          const days = parseInt(this.selectedDays, 10);
+          const recordDate = new Date(record.date);
+          const diffTime = now.getTime() - recordDate.getTime();
+          const diffDays = diffTime / (1000 * 60 * 60 * 24); // Convert ms to days
+          withinDays = diffDays <= days;
+        }
+
+        return matchesSearch && withinDays;
+      })
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()) // Sort by date descending
       .map(record => ({
         ...record,
-        date: formatDate(record.date),
-        checkIn: record.checkIn ? formatTime(record.checkIn) : '--',
-        checkOut: record.checkOut ? formatTime(record.checkOut) : '--',
-        duration: record.duration ? formatDuration(record.duration) : '--'
-      }))
-      
+        date: formatDate(record.date), // Format the date
+        checkIn: record.checkIn ? formatTime(record.checkIn) : '--', // Format check-in time
+        checkOut: record.checkOut ? formatTime(record.checkOut) : '--', // Format check-out time
+        duration: record.duration ? formatDuration(record.duration) : '--' // Format duration
+      }));
   }
 
 }

@@ -12,21 +12,6 @@ import { NgClass, NgFor } from '@angular/common';
 export class AllAttendanceTableComponent {
   @Input() records: any[] = [];
 
-  // @Input() attendanceRecords: AttendanceResponse[] = [];
-  constructor(private attendanceService: AttendanceService) { }
-  ngOnInit() {
-    // this.attendanceService.getAllAttendance().subscribe(data => {
-    //   this.attendanceRecords = data
-    //   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    //   .map(record => ({
-    //     ...record,
-    //     date: formatDate(record.date),
-    //     checkIn: record.checkIn ? formatTime(record.checkIn) : '--',
-    //     checkOut: record.checkOut ? formatTime(record.checkOut) : '--',
-    //     duration: record.duration ? formatDuration(record.duration) : '--'
-    //   }));
-    // });
-  }
 
   getStatusClass(status: string): string {
     switch (status.toLowerCase()) {
@@ -41,6 +26,10 @@ export class AllAttendanceTableComponent {
 
     }
 
+  }
+
+  trackById(index: number, record: any): any {
+    return record.id || index;
   }
 
 }

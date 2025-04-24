@@ -6,7 +6,6 @@ export function formatDate(dateString: string | Date): string {
   
   // Format time to hh:mm AM/PM
   export function formatTime(timeString: string): string {
-    console.log('Raw time value:', timeString); // Debugging: Log the input value
   
     if (!timeString) {
       return 'N/A'; // Return 'N/A' for invalid or missing time
@@ -16,7 +15,6 @@ export function formatDate(dateString: string | Date): string {
     const [hours, minutes] = timeString.split(':').map(part => parseInt(part, 10));
   
     if (isNaN(hours) || isNaN(minutes)) {
-      console.log('Invalid time format:', timeString); // Debugging: Log invalid values
       return 'N/A';
     }
   
@@ -28,10 +26,8 @@ export function formatDate(dateString: string | Date): string {
   
   // Format duration to hh:mm
   export function formatDuration(duration: string | null | undefined): string {
-    console.log('Raw duration value:', duration); // Debugging: Log the input value
   
     if (!duration || !duration.startsWith('PT')) {
-      console.log('Invalid duration:', duration); // Debugging: Log invalid values
       return 'N/A'; // Return 'N/A' for invalid or missing duration
     }
   
@@ -49,6 +45,5 @@ export function formatDate(dateString: string | Date): string {
     const totalHours = hours + Math.floor(totalMinutes / 60); // Add minutes converted to hours
     const remainingMinutes = totalMinutes % 60;
   
-    console.log(`Formatted duration: ${totalHours}h ${remainingMinutes}m`); // Debugging: Log the formatted value
     return `${totalHours}h ${remainingMinutes}m`;
   }
