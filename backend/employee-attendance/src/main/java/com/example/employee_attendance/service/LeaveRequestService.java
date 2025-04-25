@@ -68,6 +68,9 @@ public class LeaveRequestService {
         Optional<LeaveRequest> optLeaveRequest = leaveRequestRepository.findById(lrId);
         if(optLeaveRequest.isPresent()){
             LeaveRequest leaveRequest = optLeaveRequest.get();
+            if ("Approved".equalsIgnoreCase(leaveRequest.getStatus()) || "Rejected".equalsIgnoreCase(leaveRequest.getStatus())) {
+                throw new RuntimeException("Cannot change the status of an already " + leaveRequest.getStatus() + " request.");
+            }
             leaveRequest.setStatus(status);
             LeaveRequest updatedLeaveRequest = leaveRequestRepository.save(leaveRequest);
 

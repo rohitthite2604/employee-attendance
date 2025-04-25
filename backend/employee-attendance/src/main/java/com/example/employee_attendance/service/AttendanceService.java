@@ -34,9 +34,9 @@ public class AttendanceService {
         if (existingAttendance.isPresent()) {
             Attendance existing = existingAttendance.get();
             if (existing.getStatus() == AttendanceStatus.ON_LEAVE) {
-                throw new IllegalStateException("User is on leave today. Cannot mark attendance.");
+                throw new IllegalStateException("On leave today. Cannot mark attendance.");
             }
-            throw new IllegalStateException("User already checked in today.");
+            throw new IllegalStateException("Already checked in today.");
         }
         
     

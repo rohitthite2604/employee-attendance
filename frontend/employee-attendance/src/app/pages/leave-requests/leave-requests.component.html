@@ -1,42 +1,60 @@
 <div class="relative overflow-x-auto rounded-lg shadow-md bg-white dark:bg-gray-800">
-    <table class="w-full min-w-md text-base text-left rtl:text-right text-gray-500 dark:text-gray-400">
-      <thead class="uppercase bg-gray-100 dark:bg-gray-200 dark:text-black">
-        <tr>
-          <th scope="col" class="px-6 py-3">User Name</th>
-          <th scope="col" class="px-6 py-3">Leave Type</th>
-          <th scope="col" class="px-6 py-3">Applied Date</th>
-          <th scope="col" class="px-6 py-3">Start Date</th>
-          <th scope="col" class="px-6 py-3">End Date</th>
-          <th scope="col" class="px-6 py-3">Description</th>
-          <th scope="col" class="px-6 py-3">Status</th>
-          <th class="px-6 py-3">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr 
-          *ngFor="let request of leaveRequests" 
-          class="bg-white border-b text-black dark:bg-gray-100 dark:border-gray-500 hover:bg-gray-50 dark:hover:bg-gray-200"
-        >
-          <td class="px-6 py-4 font-medium whitespace-nowrap dark:text-black">{{ request.employee.userName }}</td>
-          <td class="px-6 py-4">{{ request.leaveCount.leaveType.leaveType }}</td>
-          <td class="px-6 py-4">{{ request.appliedDate }}</td>
-          <td class="px-6 py-4">{{ request.startDate }}</td>
-          <td class="px-6 py-4">{{ request.endDate }}</td>
-          <td class="px-6 py-4">{{ request.description || 'N/A' }}</td>
-          <td class="px-6 py-4">
-            <span 
-              class="px-2 py-1 rounded-full font-medium"
-              [ngClass]="getStatusClass(request.status)"
-            >
-              {{ request.status }}
-            </span>
-          </td>
-          <td class="px-6 py-4">
-            <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded mr-2" (click)="updateStatus(request.lrId, 'Approved')">&#10004;</button>
-            <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded" (click)="updateStatus(request.lrId, 'Rejected')">&#10006;</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="flex space-x-4 mb-4">
+    <div class="flex-1 p-4 bg-green-100 text-green-800 rounded shadow">
+      <div class="text-sm font-semibold">Approved</div>
+      <div class="text-2xl font-bold">{{ approvedCount }}</div>
+    </div>
+    <div class="flex-1 p-4 bg-red-100 text-red-800 rounded shadow">
+      <div class="text-sm font-semibold">Rejected</div>
+      <div class="text-2xl font-bold">{{ rejectedCount }}</div>
+    </div>
+    <div class="flex-1 p-4 bg-yellow-100 text-yellow-800 rounded shadow">
+      <div class="text-sm font-semibold">Pending</div>
+      <div class="text-2xl font-bold">{{ pendingCount }}</div>
+    </div>
   </div>
-  
+  <table class="w-full min-w-md text-base text-left rtl:text-right text-gray-500 dark:text-gray-400">
+    <thead class="uppercase bg-gray-100 dark:bg-gray-200 dark:text-black">
+      <tr>
+        <th scope="col" class="px-6 py-3">User Name</th>
+        <th scope="col" class="px-6 py-3">Leave Type</th>
+        <th scope="col" class="px-6 py-3">Applied Date</th>
+        <th scope="col" class="px-6 py-3">Start Date</th>
+        <th scope="col" class="px-6 py-3">End Date</th>
+        <th scope="col" class="px-6 py-3">Description</th>
+        <th scope="col" class="px-6 py-3">Status</th>
+        <th class="px-6 py-3">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let request of leaveRequests"
+        class="bg-white border-b text-black dark:bg-gray-100 dark:border-gray-500 hover:bg-gray-50 dark:hover:bg-gray-200">
+        <td class="px-6 py-4 font-medium whitespace-nowrap dark:text-black">{{ request.employee.userName }}</td>
+        <td class="px-6 py-4">{{ request.leaveCount.leaveType.leaveType }}</td>
+        <td class="px-6 py-4">{{ request.appliedDate }}</td>
+        <td class="px-6 py-4">{{ request.startDate }}</td>
+        <td class="px-6 py-4">{{ request.endDate }}</td>
+        <td class="px-6 py-4">{{ request.description || 'N/A' }}</td>
+        <td class="px-6 py-4">
+          <span class="px-2 py-1 rounded-full font-medium" [ngClass]="getStatusClass(request.status)">
+            {{ request.status }}
+          </span>
+        </td>
+        <td class="px-6 py-4">
+          <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded mr-2"
+            (click)="confirmUpdateStatus(request.lrId, 'Approved')"
+            [disabled]="request.status.toLowerCase() !== 'pending'"
+            [ngClass]="{'opacity-50 cursor-not-allowed': request.status.toLowerCase() !== 'pending'}">
+            &#10004;
+          </button>
+          <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
+            (click)="confirmUpdateStatus(request.lrId, 'Rejected')"
+            [disabled]="request.status.toLowerCase() !== 'pending'"
+            [ngClass]="{'opacity-50 cursor-not-allowed': request.status.toLowerCase() !== 'pending'}">
+            &#10006;
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

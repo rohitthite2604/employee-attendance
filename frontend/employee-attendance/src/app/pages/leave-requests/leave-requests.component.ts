@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LeaveRequest, LeaveRequestService } from '../../service/leave-request.service';
 import { NgClass, NgFor } from '@angular/common';
 import { formatDate } from '../../utils/formatting.utils';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-leave-requests',
@@ -27,11 +28,32 @@ export class LeaveRequestsComponent implements OnInit {
   });
 }
 
+get approvedCount(): number {
+  return this.leaveRequests.filter(request => request.status === 'Approved').length;
+}
+get rejectedCount(): number {
+  return this.leaveRequests.filter(request => request.status === 'Rejected').length;
+}
+get pendingCount(): number {
+  return this.leaveRequests.filter(request => request.status === 'Pending').length;
+}
+
 updateStatus(lrId: number, status: string): void {
-  this.leaveRequestService.updateLeaveStatus(lrId, status).subscribe(updatedRequest => {
-    const index = this.leaveRequests.findIndex(lr => lr.lrId === lrId);
-    if (index !== -1) {
-      this.leaveRequests[index] = updatedRequest;
+  this.leaveRequestService.updateLeaveStatus(lrId, status).subscribe({
+    next: updatedRequest => {
+      const index = this.leaveRequests.findIndex(lr => lr.lrId === lrId);
+      if (index !== -1) {
+        this.leaveRequests[index] = {
+          ...updatedRequest,
+          appliedDate: formatDate(updatedRequest.appliedDate),
+          startDate: formatDate(updatedRequest.startDate),
+          endDate: formatDate(updatedRequest.endDate)
+        };
+      }
+    },
+    error: (error: HttpErrorResponse) => {
+      // Show the error as an alert
+      alert(error.error.message || 'An error occurred while updating the leave status.');
     }
   });
 }
@@ -49,5 +71,20 @@ getStatusClass(status: string): string {
 
 }
 
+confirmUpdateStatus(lrId: number, status: string): void {
+  const request = this.leaveRequests.find(r => r.lrId === lrId);
+
+  // Only allow updates for Pending leave requests
+  if (request?.status !== 'Pending') {
+    return;
+  }
+
+  const action = status === 'Approved' ? 'approve' : 'reject';
+  const confirmAction = confirm(`Are you sure you want to ${action} this leave request?`);
+
+  if (confirmAction) {
+    this.updateStatus(lrId, status);
+  }
+}
 
 }
