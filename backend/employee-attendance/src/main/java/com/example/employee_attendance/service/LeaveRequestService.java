@@ -1,10 +1,6 @@
 package com.example.employee_attendance.service;
 
-import com.example.employee_attendance.model.Attendance;
-import com.example.employee_attendance.model.AttendanceStatus;
-import com.example.employee_attendance.model.LeaveCount;
-import com.example.employee_attendance.model.LeaveRequest;
-import com.example.employee_attendance.model.User;
+import com.example.employee_attendance.model.*;
 import com.example.employee_attendance.repository.AttendanceRepository;
 import com.example.employee_attendance.repository.LeaveCountRepository;
 import com.example.employee_attendance.repository.LeaveRequestRepository;
@@ -26,6 +22,9 @@ public class LeaveRequestService {
 
     @Autowired
     private AttendanceRepository attendanceRepository;
+
+    @Autowired
+    private EmailService emailService;
 
     public LeaveRequest applyForLeave(Long userId, Long lcId, LocalDate startDate, LocalDate endDate, String description) {
         LeaveCount leaveCount = leaveCountRepository.findById(lcId)
@@ -86,12 +85,26 @@ public class LeaveRequestService {
                 attendance.setStatus(AttendanceStatus.ON_LEAVE);
                 attendanceRepository.save(attendance);
             }
+            EmailDetails mail = new EmailDetails();
+            mail.setRecipient(employee.getEmail());
+            mail.setSubject("Leave Request Approved");
+            mail.setMsgBody("Hello " + employee.getUserName() + ",\n\nYour leave request from " + startDate + " to " + endDate + " has been approved.");
+            emailService.sendSimpleMail(mail);
+
         }else if ("Rejected".equalsIgnoreCase(status)) {
             LeaveCount leaveCount = leaveRequest.getLeaveCount();
             int daysRequested = (int) (leaveRequest.getEndDate().toEpochDay() - leaveRequest.getStartDate().toEpochDay()) + 1;
             leaveCount.setUsedLeaves(leaveCount.getUsedLeaves() - daysRequested);
             leaveCount.setRemainingLeaves(leaveCount.getRemainingLeaves() + daysRequested);
             leaveCountRepository.save(leaveCount);
+
+            User employee = leaveRequest.getEmployee();
+            EmailDetails mail = new EmailDetails();
+            mail.setRecipient(employee.getEmail());
+            mail.setSubject("Leave Request Rejected");
+            mail.setMsgBody("Hello " + employee.getUserName() + ",\n\nYour leave request from " +
+                    leaveRequest.getStartDate() + " to " + leaveRequest.getEndDate() + " has been rejected.");
+            emailService.sendSimpleMail(mail);
         }
 
         return updatedLeaveRequest;
