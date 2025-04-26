@@ -1,0 +1,12 @@
+<h2 mat-dialog-title class="text-3xl font-bold text-center mb-4">{{ data.policy.policyType }}</h2>
+
+<mat-dialog-content>
+  <div class="flex justify-center">
+    <div class="bg-white p-8 w-[800px] min-h-[1100px] shadow-md prose" [innerHTML]="data.policy.content">
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="close()">Close</button>
+</mat-dialog-actions>

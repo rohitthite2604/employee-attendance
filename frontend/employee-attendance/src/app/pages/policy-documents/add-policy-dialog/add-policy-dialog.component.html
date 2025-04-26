@@ -1,0 +1,17 @@
+<h2 mat-dialog-title class="text-3xl font-semibold text-center">Add New Policy</h2>
+
+<mat-dialog-content class="flex justify-center">
+  <div class="w-full max-w-[850px] min-h-[1100px] bg-white p-8 rounded-md shadow-md overflow-y-auto">
+    <mat-form-field appearance="fill" class="w-full mb-6">
+      <mat-label>Policy Title</mat-label>
+      <input matInput [(ngModel)]="policyType" placeholder="Enter Policy Title">
+    </mat-form-field>
+
+    <quill-editor [(ngModel)]="content" class="bg-white" [style]="{height: '600px'}"></quill-editor>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="mt-4">
+  <button mat-button (click)="dialogRef.close()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="savePolicy()">Save</button>
+</mat-dialog-actions>

@@ -1,1 +1,14 @@
-<p>policy works!</p>
+<div class="p-8">
+    <h1 class="text-4xl font-bold mb-8 text-center">Company Policies</h1>
+  
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div *ngFor="let policy of policies"
+           class="bg-white shadow-lg rounded-lg p-6 cursor-pointer hover:shadow-2xl transition duration-300 min-h-[100px] flex items-center justify-center text-center"
+           (click)="openViewPolicy(policy)">
+        
+        <h2 class="text-2xl font-semibold">{{ policy.policyType }}</h2>
+  
+      </div>
+    </div>
+  </div>
+  

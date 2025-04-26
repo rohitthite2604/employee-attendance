@@ -1,77 +1,61 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { AddPolicyDialogComponent } from './add-policy-dialog/add-policy-dialog.component';
+import { ViewPolicyDialogComponent } from './view-policy-dialog/view-policy-dialog.component';
 import { Policy, PolicyService } from '../../service/policy.service';
-import { NgFor, NgIf } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { QuillModule } from 'ngx-quill';
-
 @Component({
   selector: 'app-policy-documents',
-  imports: [NgIf, NgFor, FormsModule, QuillModule],
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatCardModule,
+  ],
   templateUrl: './policy-documents.component.html',
-  styleUrl: './policy-documents.component.css'
+  styleUrls: ['./policy-documents.component.css']
 })
 export class PolicyDocumentsComponent implements OnInit {
+  policies: Policy[] = [];
 
-  policies: any[] = [];
-  newPolicy = { policyType: '', content: '' };
-  isAddingPolicy = false;
-  selectedPolicy: any = null;
-  isEditingPolicy = false;
+  constructor(private policyService: PolicyService, private dialog: MatDialog) {}
 
-  constructor(private policyService: PolicyService) {}
-
-  ngOnInit(): void {
+  ngOnInit() {
     this.loadPolicies();
   }
 
   loadPolicies() {
-    this.policyService.getPolicies().subscribe((data: any[]) => {
+    this.policyService.getPolicies().subscribe(data => {
       this.policies = data;
     });
   }
 
-  startAddingPolicy() {
-    this.isAddingPolicy = true;
-    this.newPolicy = { policyType: '', content: '' };
-  }
+  openAddPolicyDialog() {
+    const dialogRef = this.dialog.open(AddPolicyDialogComponent, {
+      width: 'auto',
+      maxWidth: 'none',
+    });
 
-  cancelAdding() {
-    this.isAddingPolicy = false;
-  }
-
-  saveNewPolicy() {
-    if (this.newPolicy.policyType && this.newPolicy.content) {
-      this.policyService.addPolicy(this.newPolicy).subscribe(() => {
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'refresh') {
         this.loadPolicies();
-        this.isAddingPolicy = false;
-      });
-    }
-  }
-
-  selectPolicy(policy: any) {
-    this.selectedPolicy = policy;
-    this.isEditingPolicy = false;
-  }
-
-  startEditing(policy: any) {
-    this.selectedPolicy = policy;
-    this.isEditingPolicy = true;
-  }
-
-  cancelEditing() {
-    this.isEditingPolicy = false;
-  }
-
-  updatePolicy(policy: any) {
-    this.policyService.updatePolicy(policy).subscribe(() => {
-      this.loadPolicies();
-      this.isEditingPolicy = false;
+      }
     });
   }
 
-  deletePolicy(policyId: number) {
-    this.policyService.deletePolicy(policyId).subscribe(() => {
-      this.loadPolicies();
+  openViewPolicyDialog(policy: Policy) {
+    const dialogRef = this.dialog.open(ViewPolicyDialogComponent, {
+      data: { policy },
+      width: 'auto',
+      maxWidth: 'none',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'refresh') {
+        this.loadPolicies();
+      }
     });
   }
 }
