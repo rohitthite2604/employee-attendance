@@ -1,1 +1,71 @@
-<p>policy-documents works!</p>
+<div class="flex justify-between items-center mb-4">
+    <h2 class="text-2xl font-bold">Policy Documents</h2>
+    <button (click)="startAddingPolicy()" class="bg-green-500 text-white px-4 py-2 rounded">
+      ➕ Add New Policy
+    </button>
+  </div>
+  
+  <!-- New Policy Form -->
+  <div *ngIf="isAddingPolicy" class="border p-4 mb-4 bg-white shadow-md rounded">
+    <input
+      type="text"
+      [(ngModel)]="newPolicy.policyType"
+      placeholder="Enter Policy Title"
+      class="border p-2 w-full mb-4"
+    />
+  
+    <quill-editor
+      [(ngModel)]="newPolicy.content"
+      [style]="{height: '250px'}"
+      placeholder="Enter Policy Content..."
+    ></quill-editor>
+  
+    <div class="mt-4 flex gap-2">
+      <button (click)="saveNewPolicy()" class="bg-blue-500 text-white px-4 py-2 rounded">
+        Save Policy
+      </button>
+      <button (click)="cancelAdding()" class="bg-gray-400 text-white px-4 py-2 rounded">
+        Cancel
+      </button>
+    </div>
+  </div>
+  
+  <!-- Existing Policies -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div *ngFor="let policy of policies" class="border p-4 bg-white shadow-md rounded">
+      <h3 class="text-xl font-semibold cursor-pointer" (click)="selectPolicy(policy)">
+        {{ policy.policyType }}
+      </h3>
+  
+      <div *ngIf="selectedPolicy === policy">
+        <div *ngIf="!isEditingPolicy">
+          <!-- Read-only content -->
+          <div [innerHTML]="policy.content" class="prose"></div>
+  
+          <div class="mt-4 flex gap-2">
+            <button (click)="startEditing(policy)" class="bg-yellow-500 text-white px-4 py-2 rounded">
+              Edit
+            </button>
+            <button (click)="deletePolicy(policy.policyId)" class="bg-red-500 text-white px-4 py-2 rounded">
+              Delete
+            </button>
+          </div>
+        </div>
+  
+        <div *ngIf="isEditingPolicy">
+          <!-- Editable content -->
+          <quill-editor [(ngModel)]="policy.content" [style]="{height: '250px'}"></quill-editor>
+  
+          <div class="mt-4 flex gap-2">
+            <button (click)="updatePolicy(policy)" class="bg-blue-500 text-white px-4 py-2 rounded">
+              Save Update
+            </button>
+            <button (click)="cancelEditing()" class="bg-gray-400 text-white px-4 py-2 rounded">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
