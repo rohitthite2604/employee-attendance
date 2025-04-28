@@ -26,6 +26,13 @@ export class LoginComponent {
         localStorage.setItem('userId', res.userId);
         this.authService.setUserRole(res.role);
         this.authService.setUserName(res.userName);
+        this.authService.setPhoneNumber(res.phoneNumber);
+        this.authService.setEmail(res.email);
+        this.authService.setChapterId(res.chapter.chId.toString());
+        this.authService.setChapterName(res.chapter.chName);
+        this.authService.setDesignationId(res.designation.designId.toString());
+        this.authService.setDesignationName(res.designation.designName);
+
         this.router.navigate(['/dashboard']);
       },
       error: (err) => {

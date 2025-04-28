@@ -27,8 +27,9 @@ export class PolicyComponent implements OnInit {
 
   openViewPolicy(policy: Policy) {
     this.dialog.open(ViewPolicyReadonlyDialogComponent, {
-      width: '80%',
       data: { policy },
+      width: 'auto',
+      maxWidth: 'none',
     });
   }
 

@@ -1,9 +1,13 @@
-<div class="page-header" style="margin-bottom: 20px;">
+<div class="flex justify- start mb-5">
   <button mat-raised-button color="primary" (click)="openAddPolicyDialog()">Add New Policy</button>
 </div>
 
-<div class="policy-cards" style="display: flex; flex-wrap: wrap; gap: 20px; ">
-  <mat-card style="width: 300px; height: 100px; cursor: pointer; " *ngFor="let policy of policies" (click)="openViewPolicyDialog(policy)">
-    <mat-card-title>{{ policy.policyType }}</mat-card-title>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+  <mat-card 
+    *ngFor="let policy of policies" 
+    (click)="openViewPolicyDialog(policy)" 
+    class="bg-white shadow-md rounded-lg p-6 cursor-pointer hover:shadow-2xl transition duration-300 min-h-[100px] flex items-center justify-center text-center"
+  >
+    <mat-card-title class="text-lg font-semibold text-center">{{ policy.policyType }}</mat-card-title>
   </mat-card>
 </div>
