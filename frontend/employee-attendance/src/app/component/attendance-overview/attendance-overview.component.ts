@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-attendance-overview',
@@ -7,5 +7,10 @@ import { Component } from '@angular/core';
   styleUrl: './attendance-overview.component.css'
 })
 export class AttendanceOverviewComponent {
+
+  @Input() presentCount = 0;
+@Input() absentCount = 0;
+@Input() leaveCount = 0;
+
 
 }

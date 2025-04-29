@@ -83,7 +83,34 @@ public class AttendanceService {
     }
 
     public List<Attendance> getAllAttendance(){
-        return attendanceRepository.findAll();
+        List<Attendance> allRecords = attendanceRepository.findAll();
+        LocalDate today = LocalDate.now();
+
+        // Find all users
+        List<User> allUsers = userRepository.findAll();
+
+        // Get userIds that already have a record for today
+        List<Long> presentTodayIds = allRecords.stream()
+                .filter(a -> a.getDate().equals(today))
+                .map(a -> a.getUser().getUserId())
+                .toList();
+
+        // Add virtual ABSENT records for users without a record today
+        for (User user : allUsers) {
+            if (!presentTodayIds.contains(user.getUserId())) {
+                Attendance absent = new Attendance();
+                absent.setUser(user);
+                absent.setDate(today);
+                absent.setStatus(AttendanceStatus.ABSENT);
+                absent.setCheckIn(null);
+                absent.setCheckOut(null);
+                absent.setDuration(null);
+
+                allRecords.add(absent);
+            }
+        }
+
+        return allRecords;
     }
 
 }

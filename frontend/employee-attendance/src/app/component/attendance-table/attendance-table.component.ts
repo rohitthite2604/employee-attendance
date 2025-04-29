@@ -1,5 +1,5 @@
 import { NgClass, NgFor } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AttendanceRecord, AttendanceService } from '../../service/attendance.service';
 import { AuthService } from '../../service/auth.service';
 import { Subscription } from 'rxjs';
@@ -12,6 +12,8 @@ import { formatDate, formatDuration, formatTime } from '../../utils/formatting.u
   styleUrl: './attendance-table.component.css'
 })
 export class AttendanceTableComponent implements OnInit {
+
+  @Output() statsUpdated = new EventEmitter<{ present: number, absent: number, leave: number }>();
 
   attendanceRecords: AttendanceRecord[] = [];
   userId: number = 0;
@@ -39,6 +41,37 @@ export class AttendanceTableComponent implements OnInit {
   loadAttendance(): void {
     this.attendanceService.getUserAttendance(this.userId).subscribe(
       (records) => {
+        const today = new Date().toISOString().split('T')[0]; // yyyy-mm-dd
+
+      const hasToday = records.some(r => r.date === today);
+
+      // If no record for today, push a default ABSENT record
+      if (!hasToday) {
+        records.push({
+          date: today,
+          checkIn: '--',
+          checkOut: '--',
+          duration: '--',
+          status: 'ABSENT'
+        } as AttendanceRecord);
+      }
+
+
+      let present = 0;
+      let absent = 0;
+      let leave = 0;
+
+      for(const record of records) {
+        if (record.status === 'PRESENT') {
+          present++;
+        } else if (record.status === 'ABSENT') {
+          absent++;
+        } else if (record.status === 'ON_LEAVE') {
+          leave++;
+        }
+      }
+      this.statsUpdated.emit({ present, absent, leave });
+
         this.attendanceRecords = records
         .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
         .map(record => ({

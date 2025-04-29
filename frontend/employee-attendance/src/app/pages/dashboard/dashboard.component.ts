@@ -11,4 +11,14 @@ import { AttendanceTableComponent } from '../../component/attendance-table/atten
 })
 export class DashboardComponent {
 
+  presentCount = 0;
+  absentCount = 0;
+  leaveCount = 0;
+
+  onStatsUpdated(stats: { present: number; absent: number; leave: number }) {
+    this.presentCount = stats.present;
+    this.absentCount = stats.absent;
+    this.leaveCount = stats.leave;
+  }
+
 }
