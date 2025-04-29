@@ -1,0 +1,34 @@
+<h2 mat-dialog-title class="text-3xl font-semibold text-center">{{ data.policy.policyType }}</h2>
+
+<mat-dialog-content class="flex justify-center">
+  <div class="w-full max-w-[850px] min-w-[850px] px-16 py-12 min-h-[1100px] bg-white p-8 rounded-md shadow-md overflow-y-auto overflow-x-hidden text-gray-800 leading-relaxed  break-words">
+    
+    <div *ngIf="!isEditing">
+      <div [innerHTML]="data.policy.content"
+      class="text-justify whitespace-normal [&>h1]:text-3xl [&>h2]:text-2xl [&>h3]:text-xl [&>h4]:text-xl [&>h5]:text-lg [&>h6]:text-base
+                     [&>p]:mb-4 [&>ul]:list-disc [&>ul]:pl-8 [&>ol]:list-decimal [&>ol]:pl-8
+                     [&>blockquote]:pl-4 [&>blockquote]:border-l-4 [&>blockquote]:border-gray-400
+                     [&>li]:mb-2 overflow-x-hidden break-words"
+                     ></div>
+    </div>
+
+    <div *ngIf="isEditing" class="space-y-6">
+      <quill-editor [(ngModel)]="content" class="bg-white"></quill-editor>
+    </div>
+
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="mt-4">
+  <button mat-button (click)="dialogRef.close()">Close</button>
+
+  <ng-container *ngIf="!isEditing">
+    <button mat-raised-button (click)="enableEdit()">Edit</button>
+  </ng-container>
+
+  <ng-container *ngIf="isEditing">
+    <button mat-raised-button color="primary" (click)="saveEdit()">Save</button>
+  </ng-container>
+
+  <button mat-raised-button color="warn" (click)="deletePolicy()">Delete</button>
+</mat-dialog-actions>

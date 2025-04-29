@@ -15,10 +15,7 @@ public class Policy {
 
     private String policyType; // e.g. Leave Policy, Work Policy
 
-    @Enumerated(EnumType.STRING)
-    private WorkMode workMode;
-
-    @ManyToOne
-    @JoinColumn(name = "hId")
-    private User hr; // HR who created the policy
+    @Lob
+    @Column(columnDefinition = "TEXT")
+    private String content;
 }
