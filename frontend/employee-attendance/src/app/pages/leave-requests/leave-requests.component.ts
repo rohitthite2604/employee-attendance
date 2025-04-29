@@ -3,15 +3,17 @@ import { LeaveRequest, LeaveRequestService } from '../../service/leave-request.s
 import { NgClass, NgFor } from '@angular/common';
 import { formatDate } from '../../utils/formatting.utils';
 import { HttpErrorResponse } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-leave-requests',
-  imports: [NgFor, NgClass],
+  imports: [NgFor, NgClass, FormsModule],
   templateUrl: './leave-requests.component.html',
   styleUrl: './leave-requests.component.css'
 })
 export class LeaveRequestsComponent implements OnInit {
   leaveRequests: LeaveRequest[] = []; // Holds leave requests
+  selectedStatus: string = 'All';
 
   constructor(private leaveRequestService: LeaveRequestService) { }
 
@@ -56,6 +58,13 @@ updateStatus(lrId: number, status: string): void {
       alert(error.error.message || 'An error occurred while updating the leave status.');
     }
   });
+}
+
+get filteredLeaveRequests(): LeaveRequest[] {
+  if (this.selectedStatus === 'All'){
+    return this.leaveRequests;
+  }
+  return this.leaveRequests.filter(request => request.status === this.selectedStatus);
 }
 
 getStatusClass(status: string): string {

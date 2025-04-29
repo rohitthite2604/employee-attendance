@@ -27,13 +27,13 @@ export class SignupComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private leaveRequestService: LeaveRequestService) {
     this.signupForm = this.fb.group({
-      userName: ['', Validators.required],
-      phoneNumber: ['', Validators.required],
+      userName: ['', [Validators.required, Validators.minLength(3)]],
+      phoneNumber: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(6)]],
       dateOfJoining: [''],
       designationId: [null, Validators.required],
-      address: [''],
+      address: ['', Validators.required],
       chapterId: [null, Validators.required],
       role: [null, Validators.required]
     });
@@ -70,7 +70,7 @@ export class SignupComponent implements OnInit {
     this.http.post('http://localhost:8080/auth/signup', requestBody).subscribe({
       next: res => {
         const userId = (res as { userId: number }).userId;
-        alert('User registered! 🎉');
+        alert('User registered!');
         this.router.navigate(['/login']);
         this.leaveRequestService.assignLeaveTypes(userId).subscribe({
           next: (response) => {

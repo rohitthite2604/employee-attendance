@@ -1,59 +1,120 @@
-<div class="max-w-xl mx-auto mt-10 p-6 bg-white rounded shadow-md">
-    <h2 class="text-2xl font-bold mb-6">User Signup</h2>
-  
-    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-      <div class="mb-4">
-        <label class="block text-sm font-medium mb-1">Full Name</label>
-        <input formControlName="userName" class="w-full p-2 border rounded" />
+<!-- Full-screen background wrapper -->
+<div class="min-h-screen bg-gray-200 py-10">
+  <div class="max-w-2xl mx-auto p-8 bg-white rounded-lg shadow-lg">
+    <h2 class="text-3xl font-bold mb-8 text-center text-gray-800">Sign Up</h2>
+
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="space-y-6">
+      <!-- Form fields remain the same... -->
+      <!-- Full Name -->
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-1">Full Name</label>
+        <input formControlName="userName" placeholder="Your Full Name" autofocus
+          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        <div *ngIf="signupForm.get('userName')?.touched && signupForm.get('userName')?.invalid" class="text-red-500 text-sm mt-1">
+          <span *ngIf="signupForm.get('userName')?.errors?.['required']">Full Name is required.</span>
+          <span *ngIf="signupForm.get('userName')?.errors?.['minlength']">Minimum 3 characters.</span>
+        </div>
       </div>
-  
-      <div class="mb-4">
-        <label class="block text-sm font-medium mb-1">Phone Number</label>
-        <input formControlName="phoneNumber" class="w-full p-2 border rounded" />
+
+      <!-- Phone Number -->
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-1">Phone Number</label>
+        <input formControlName="phoneNumber" placeholder="Your Phone Number"
+          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        <div *ngIf="signupForm.get('phoneNumber')?.touched && signupForm.get('phoneNumber')?.invalid" class="text-red-500 text-sm mt-1">
+          <span *ngIf="signupForm.get('phoneNumber')?.errors?.['required']">Phone number is required.</span>
+          <span *ngIf="signupForm.get('phoneNumber')?.errors?.['pattern']">Enter a valid 10-digit number.</span>
+        </div>
       </div>
-  
-      <div class="mb-4">
-        <label class="block text-sm font-medium mb-1">Email</label>
-        <input type="email" formControlName="email" class="w-full p-2 border rounded" />
+
+      <!-- Email -->
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-1">Email</label>
+        <input type="email" formControlName="email" placeholder="Your Email"
+          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        
+        <!-- Validation Message -->
+        <div *ngIf="signupForm.get('email')?.touched && signupForm.get('email')?.invalid" class="text-red-500 text-sm mt-1">
+          <span *ngIf="signupForm.get('email')?.errors?.['required']">Email is required.</span>
+          <span *ngIf="signupForm.get('email')?.errors?.['email']">Please enter a valid email address.</span>
+        </div>
       </div>
-  
-      <div class="mb-4">
-        <label class="block text-sm font-medium mb-1">Password</label>
-        <input type="password" formControlName="password" class="w-full p-2 border rounded" />
+
+      <!-- Password -->
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-1">Password</label>
+        <input type="password" formControlName="password" placeholder="••••••••"
+          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      
+        <!-- Validation Message -->
+        <div *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.invalid" class="text-red-500 text-sm mt-1">
+          <span *ngIf="signupForm.get('password')?.errors?.['required']">Password is required.</span>
+          <span *ngIf="signupForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters.</span>
+        </div>
       </div>
-  
-      <div class="mb-4">
-        <label class="block text-sm font-medium mb-1">Select Designation</label>
-        <select formControlName="designationId" class="w-full p-2 border rounded">
+
+      <!-- Designation -->
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-1">Select Designation</label>
+        <select formControlName="designationId"
+          class="w-full px-4 py-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
           <option [value]="null" disabled selected>Select designation</option>
           <option *ngFor="let design of designations" [value]="design.designId">{{ design.designName }}</option>
         </select>
+        <!-- Validation Message -->
+        <div *ngIf="signupForm.get('designationId')?.touched && signupForm.get('designationId')?.invalid" class="text-red-500 text-sm mt-1">
+          <span *ngIf="signupForm.get('designationId')?.errors?.['required']">Designation is required.</span>
+        </div>
       </div>
-  
-      <div class="mb-4">
-        <label class="block text-sm font-medium mb-1">Address</label>
-        <input formControlName="address" class="w-full p-2 border rounded" />
+      
+
+      <!-- Address -->
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-1">Address</label>
+        <input formControlName="address" placeholder="Your Address"
+          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        <!-- Validation Message -->
+        <div *ngIf="signupForm.get('address')?.touched && signupForm.get('address')?.invalid" class="text-red-500 text-sm mt-1">
+          <span *ngIf="signupForm.get('address')?.errors?.['required']">Address is required.</span>
+        </div>
       </div>
-  
-      <div class="mb-4">
-        <label class="block text-sm font-medium mb-1">Select Chapter</label>
-        <select formControlName="chapterId" class="w-full p-2 border rounded">
+
+      <!-- Chapter -->
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-1">Select Chapter</label>
+        <select formControlName="chapterId"
+          class="w-full px-4 py-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
           <option [value]="null" disabled selected>Select a chapter</option>
           <option *ngFor="let ch of chapters" [value]="ch.chId">{{ ch.chName }}</option>
         </select>
+        <!-- Validation Message -->
+        <div *ngIf="signupForm.get('chapterId')?.touched && signupForm.get('chapterId')?.invalid" class="text-red-500 text-sm mt-1">
+          <span *ngIf="signupForm.get('chapterId')?.errors?.['required']">Chapter selection is required.</span>
+        </div>
       </div>
-  
-      <div class="mb-4">
-        <label class="block text-sm font-medium mb-1">Role</label>
-        <select formControlName="role" class="w-full p-2 border rounded">
+
+      <!-- Role -->
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-1">Role</label>
+        <select formControlName="role"
+          class="w-full px-4 py-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
           <option [value]="null" disabled selected>Select a Role</option>
           <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
         </select>
+        <!-- Validation Message -->
+        <div *ngIf="signupForm.get('role')?.touched && signupForm.get('role')?.invalid" class="text-red-500 text-sm mt-1">
+          <span *ngIf="signupForm.get('role')?.errors?.['required']">Role selection is required.</span>
+        </div>
       </div>
-  
-      <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-        Sign Up
-      </button>
+      
+
+      <!-- Submit Button -->
+      <div class="text-center">
+        <button type="submit"
+          class="w-full md:w-auto bg-blue-600 text-white font-semibold px-6 py-2 rounded-md hover:bg-blue-700 transition">
+          Sign Up
+        </button>
+      </div>
     </form>
   </div>
-  
+</div>

@@ -37,6 +37,17 @@
   </div>
 </div>
 
+<div class="flex justify-start mb-6 py-2">
+  <select
+  [(ngModel)]="selectedStatus"
+  class="p-2 rounded border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+  <option value="All">All</option>
+  <option value="Approved">Approved</option>
+  <option value="Pending">Pending</option>
+  <option value="Rejected">Rejected</option>
+</select>
+</div>
+
 
 <div class="relative overflow-x-auto rounded-lg shadow-md bg-white dark:bg-gray-800">
   
@@ -54,7 +65,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let request of leaveRequests"
+      <tr *ngFor="let request of filteredLeaveRequests"
         class="bg-white border-b text-black dark:bg-gray-100 dark:border-gray-500 hover:bg-gray-50 dark:hover:bg-gray-200">
         <td class="px-6 py-4 font-medium whitespace-nowrap dark:text-black">{{ request.employee.userName }}</td>
         <td class="px-6 py-4">{{ request.leaveCount.leaveType.leaveType }}</td>

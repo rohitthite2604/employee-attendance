@@ -24,55 +24,55 @@ ngOnInit(): void {
     const allItems = [
       {
         name: 'Dashboard',
-        icon: { /* icon data */ },
+        icon: 'fas fa-home',
         link: '/dashboard',
         roles: ['MANAGER', 'EMPLOYEE','HR']
       },
       {
         name: 'Attendance History',
-        icon: { /* icon data */ },
+        icon: 'fas fa-clipboard-list',
         link: '/attendance',
         roles: ['EMPLOYEE','HR','MANAGER']
       },
       {
         name: 'Apply for Leave',
-        icon: { /* icon data */ },
+        icon: 'fas fa-paper-plane',
         link: '/leave',
         roles: ['EMPLOYEE']
       },
       {
         name: 'Leave Status',
-        icon: { /* icon data */ },
+        icon: 'fas fa-clipboard-check',
         link: '/leave-status',
         roles: ['EMPLOYEE']
       },
       {
         name: 'View Policies',
-        icon: { /* icon data */ },
+        icon: 'fas fa-scroll',
         link: '/policy',
         roles: ['EMPLOYEE']
       },
       {
         name: 'Leave Requests',
-        icon: { /* icon data */ },
+        icon: 'fas fa-file-alt',
         link: '/leave-requests',
         roles: ['MANAGER']
       },
       {
         name: 'Attendance Records',
-        icon: { /* icon data */ },
+        icon: 'fas fa-users',
         link: '/attendance-records',
         roles: ['MANAGER','HR']
       },
       {
         name: 'Leave Types',
-        icon: { /* icon data */ },
+        icon: 'fas fa-list-ul',
         link: '/leave-types',
         roles: ['HR']
       },
       {
         name: 'Policy Documents',
-        icon: { /* icon data */ },
+        icon: 'fas fa-file-contract',
         link: '/policy-documents',
         roles: ['HR']
       }

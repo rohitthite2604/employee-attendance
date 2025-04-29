@@ -30,14 +30,13 @@
       class="group flex items-center gap-4 p-3 rounded-xl transition-all duration-500 hover:bg-white/30 hover:text-white"
       [ngClass]="{ 'bg-white/40 text-white font-bold shadow-lg': currentUrl === item.link }"
     >
-      <!-- Icon Wrapper -->
-      <div
-        class="grid place-items-center w-10 h-10 rounded-lg bg-white/20 text-white group-hover:bg-white/40 transition-all duration-500"
-      >
-        <svg [attr.viewBox]="item.icon.viewBox" class="w-6 h-6">
-          <path [attr.d]="item.icon.d"></path>
-        </svg>
-      </div>
+     <!-- Icon Wrapper -->
+    <div
+    class="grid place-items-center w-10 h-10 rounded-lg bg-white/20 text-white group-hover:bg-white/40 transition-all duration-500"
+  >
+    <i class="{{ item.icon }} text-lg"></i>
+  </div>
+
 
       <!-- Item Name -->
       <span

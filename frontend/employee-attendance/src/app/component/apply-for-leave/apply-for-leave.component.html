@@ -1,17 +1,37 @@
 
-
   <!-- Leave Summary Cards -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
-    <div
-      *ngFor="let leave of leaveCounts"
-      class="bg-white border border-gray-200 rounded-xl shadow-sm p-5 hover:shadow-md transition"
-    >
-      <h3 class="text-lg font-semibold text-gray-800 mb-1">{{ leave.leaveType.leaveType }}</h3>
-      <p class="text-sm text-gray-600">Total: <strong>{{ leave.leaveType.totalLeaves }}</strong></p>
-      <p class="text-sm text-gray-600">Used: <strong>{{ leave.usedLeaves }}</strong></p>
-      <p class="text-sm text-gray-600">Remaining: <strong class="text-green-600">{{ leave.remainingLeaves }}</strong></p>
+  <!-- Leave Summary Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+  <div
+    *ngFor="let leave of leaveCounts"
+    class="bg-white border border-gray-200 rounded-xl shadow-sm p-5 hover:shadow-md transition"
+  >
+    <!-- Flex container: Left text + Right icon -->
+    <div class="flex justify-between items-center h-full">
+      
+      <!-- Left: Leave data -->
+      <div>
+        <h3 class="text-lg font-semibold text-gray-800 mb-1">
+          {{ leave.leaveType.leaveType }}
+        </h3>
+        <p class="text-sm text-gray-600">
+          Total: <strong>{{ leave.leaveType.totalLeaves }}</strong>
+        </p>
+        <p class="text-sm text-gray-600">
+          Used: <strong>{{ leave.usedLeaves }}</strong>
+        </p>
+        <p class="text-sm text-gray-600">
+          Remaining: <strong class="text-green-600">{{ leave.remainingLeaves }}</strong>
+        </p>
+      </div>
+
+      <!-- Right: Centered, larger icon -->
+      <i class="fas fa-umbrella-beach text-5xl ml-4"></i>
+
     </div>
   </div>
+</div>
+
 
   <!-- Centered Form -->
   <div class="flex justify-center">

@@ -39,10 +39,7 @@
         viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
       </svg>
-      <svg *ngIf="todayStatus === 'ON_LEAVE'" class="w-12 h-12 text-yellow-500" fill="none" stroke="currentColor" stroke-width="2"
-        viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3" />
-      </svg>
+      <i *ngIf="todayStatus === 'ON_LEAVE'" class="fas fa-umbrella-beach text-yellow-500 text-4xl"></i>
     </div>
   </div>
 
