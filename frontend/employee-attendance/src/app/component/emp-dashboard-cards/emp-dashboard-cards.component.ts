@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { AttendanceService } from '../../service/attendance.service';
 import { AuthService } from '../../service/auth.service';
 import { formatDate, formatDuration, formatTime } from '../../utils/formatting.utils';
-import { NgIf } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-emp-dashboard-cards',
-  imports: [NgIf],
+  imports: [NgIf, NgClass],
   templateUrl: './emp-dashboard-cards.component.html',
   styleUrl: './emp-dashboard-cards.component.css'
 })

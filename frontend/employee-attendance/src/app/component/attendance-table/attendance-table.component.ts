@@ -70,6 +70,8 @@ export class AttendanceTableComponent implements OnInit {
         return 'bg-yellow-100 text-yellow-800';
       case 'absent':
         return 'bg-red-100 text-red-800';
+      case 'on_leave':
+        return 'bg-yellow-100 text-yellow-700';
       default:
         return 'bg-gray-100 text-gray-800';
 

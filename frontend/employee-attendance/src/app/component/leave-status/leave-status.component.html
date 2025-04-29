@@ -1,7 +1,7 @@
 <!-- leave-requests.component.html -->
 <div class="relative overflow-x-auto rounded-lg shadow-md bg-white dark:bg-gray-800">
   <table class="w-full min-w-md text-base text-left rtl:text-right text-gray-500 dark:text-gray-400">
-    <thead class="uppercase bg-gray-100 dark:bg-gray-200 dark:text-black">
+    <thead class="bg-blue-50 text-gray-800 dark:bg-gray-700 dark:text-white text-lg">
       <tr>
         <th scope="col" class="px-6 py-3">User Name</th>
         <th scope="col" class="px-6 py-3">Leave Type</th>
@@ -25,7 +25,7 @@
         <td class="px-6 py-4">{{ request.description || 'N/A' }}</td>
         <td class="px-6 py-4">
           <span
-            class="px-2 py-1 rounded-full font-medium"
+            class="px-2 py-1 rounded-full font-medium uppercase"
             [ngClass]="{
               'bg-green-100 text-green-800': request.status === 'Approved',
               'bg-yellow-100 text-yellow-800': request.status === 'Pending',

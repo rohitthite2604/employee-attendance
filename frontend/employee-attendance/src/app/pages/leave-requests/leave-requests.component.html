@@ -1,22 +1,47 @@
-<div class="flex space-x-4 mb-4">
-  <div class="flex-1 p-4 bg-green-100 text-green-800 rounded shadow">
-    <div class="text-sm font-semibold">Approved</div>
-    <div class="text-2xl font-bold">{{ approvedCount }}</div>
+<div class="flex flex-col sm:flex-row gap-4 mb-12">
+  <!-- Approved Card -->
+  <div class="flex-1 p-6 bg-green-50 text-green-800 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
+    <div class="flex items-center justify-between mb-2">
+      <span class="text-sm font-medium uppercase tracking-wide">Approved</span>
+      <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" stroke-width="2"
+        viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+      </svg>
+    </div>
+    <div class="text-3xl font-bold">{{ approvedCount }}</div>
   </div>
-  <div class="flex-1 p-4 bg-red-100 text-red-800 rounded shadow">
-    <div class="text-sm font-semibold">Rejected</div>
-    <div class="text-2xl font-bold">{{ rejectedCount }}</div>
+
+  <!-- Rejected Card -->
+  <div class="flex-1 p-6 bg-red-50 text-red-800 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
+    <div class="flex items-center justify-between mb-2">
+      <span class="text-sm font-medium uppercase tracking-wide">Rejected</span>
+      <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" stroke-width="2"
+        viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </div>
+    <div class="text-3xl font-bold">{{ rejectedCount }}</div>
   </div>
-  <div class="flex-1 p-4 bg-yellow-100 text-yellow-800 rounded shadow">
-    <div class="text-sm font-semibold">Pending</div>
-    <div class="text-2xl font-bold">{{ pendingCount }}</div>
+
+  <!-- Pending Card -->
+  <div class="flex-1 p-6 bg-yellow-50 text-yellow-800 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
+    <div class="flex items-center justify-between mb-2">
+      <span class="text-sm font-medium uppercase tracking-wide">Pending</span>
+      <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" stroke-width="2"
+        viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3" />
+        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" />
+      </svg>
+    </div>
+    <div class="text-3xl font-bold">{{ pendingCount }}</div>
   </div>
 </div>
+
 
 <div class="relative overflow-x-auto rounded-lg shadow-md bg-white dark:bg-gray-800">
   
   <table class="w-full min-w-md text-base text-left rtl:text-right text-gray-500 dark:text-gray-400">
-    <thead class="uppercase bg-gray-100 dark:bg-gray-200 dark:text-black">
+    <thead class="bg-blue-50 text-gray-800 dark:bg-gray-700 dark:text-white text-lg">
       <tr>
         <th scope="col" class="px-6 py-3">User Name</th>
         <th scope="col" class="px-6 py-3">Leave Type</th>
@@ -38,7 +63,7 @@
         <td class="px-6 py-4">{{ request.endDate }}</td>
         <td class="px-6 py-4">{{ request.description || 'N/A' }}</td>
         <td class="px-6 py-4">
-          <span class="px-2 py-1 rounded-full font-medium" [ngClass]="getStatusClass(request.status)">
+          <span class="px-2 py-1 rounded-full font-medium uppercase" [ngClass]="getStatusClass(request.status)">
             {{ request.status }}
           </span>
         </td>

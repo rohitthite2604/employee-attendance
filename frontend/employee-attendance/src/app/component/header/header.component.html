@@ -1,11 +1,13 @@
-<header class="bg-blue-200 text-black p-4 top-0 left-0 w-full z-10 border-b-2 border-gray-200">
-  <div class="flex items-center justify-end space-x-4">
-    <!-- <img 
-      src="https://images.ctfassets.net/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=1200&h=992&fl=progressive&q=70&fm=jpg" 
-      alt="Profile" 
-      class="w-8 h-8 rounded-full object-cover"
-    /> -->
-    <span class="font-medium cursor-pointer" (click)="toggleProfilePopup()">
+<header class="bg-blue-500 text-black p-4 top-0 left-0 w-full z-10 border-b-2 border-gray-200">
+
+  <div class="flex items-center justify-between">
+
+    <div class="text-2xl font-bold tracking-wide text-white">
+      {{role}} Portal
+    </div>
+  
+  <div class="flex items-center space-x-4">
+    <span class="font-medium cursor-pointer text-white" (click)="toggleProfilePopup()">
      Welcome, {{ userName }}
     </span>
 
@@ -16,25 +18,56 @@
       Logout
     </button>
   </div>
+</div>
 </header>
 
 <!-- Profile Popup -->
-<div *ngIf="toggleProfile" class="fixed inset-0  bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50">
-  <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
-    <button (click)="toggleProfilePopup()" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
-      ✕
+<div *ngIf="toggleProfile" class="fixed inset-0 bg-opacity-40 backdrop-blur-sm flex items-center justify-center z-50">
+  <div class="bg-white rounded-xl shadow-2xl p-8 w-full max-w-md relative">
+    
+    <!-- Close Button -->
+    <button (click)="toggleProfilePopup()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-2xl">
+      &times;
     </button>
 
-    <h2 class="text-2xl font-bold mb-4 text-center">Profile</h2>
+    <!-- Header -->
+    <h2 class="text-3xl font-semibold mb-6 text-center text-gray-800">Profile</h2>
 
-    <div class="space-y-3">
-      <div><strong>Full Name:</strong> {{ userName }}</div>
+    <!-- Divider -->
+    <div class="border-b border-gray-200 mb-6"></div>
 
-      <div><strong>Role:</strong> {{ role || 'N/A' }}</div>
-      <div><strong>Phone Number:</strong> {{ phoneNumber }}</div>
-      <div><strong>Email:</strong> {{ email }}</div>
-      <div><strong>Chapter:</strong> {{ chapterName }}</div>
-      <div><strong>Designation:</strong> {{ designationName }}</div>
+    <!-- Profile Info -->
+    <div class="space-y-5 text-gray-700 text-md">
+      <div class="flex items-start">
+        <span class="font-medium w-32">Full Name:</span>
+        <span class="flex-1">{{ userName }}</span>
+      </div>
+
+      <div class="flex items-start">
+        <span class="font-medium w-32">Role:</span>
+        <span class="flex-1">{{ role || 'N/A' }}</span>
+      </div>
+
+      <div class="flex items-start">
+        <span class="font-medium w-32">Phone Number:</span>
+        <span class="flex-1">{{ phoneNumber }}</span>
+      </div>
+
+      <div class="flex items-start">
+        <span class="font-medium w-32">Email:</span>
+        <span class="flex-1">{{ email }}</span>
+      </div>
+
+      <div class="flex items-start">
+        <span class="font-medium w-32">Chapter:</span>
+        <span class="flex-1">{{ chapterName }}</span>
+      </div>
+
+      <div class="flex items-start">
+        <span class="font-medium w-32">Designation:</span>
+        <span class="flex-1">{{ designationName }}</span>
+      </div>
     </div>
   </div>
 </div>
+

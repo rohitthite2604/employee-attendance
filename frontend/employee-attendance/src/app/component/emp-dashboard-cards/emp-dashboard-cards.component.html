@@ -1,38 +1,62 @@
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
   <!-- Clock In Section -->
-  <div class="bg-white p-4 rounded-xl shadow">
-    <p class="text-gray-500 text-sm">Time</p>
+  <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition duration-200 border border-gray-100">
+    <p class="text-gray-500 text-sm mb-2">Time</p>
     <div class="flex justify-between items-center flex-wrap">
-      <h2 class="sm:text-2xl lg:text-3xl font-semibold">{{ currentTime }}</h2>
-      <button class="mt-3 px-4 py-2 bg-green-500 text-white rounded-lg cursor-pointer" (click)="toggleCheckInOut()">
+      <h2 class="sm:text-2xl lg:text-3xl font-semibold text-gray-800">{{ currentTime }}</h2>
+      <button
+        class="mt-3 px-5 py-2 text-white font-medium rounded-lg shadow-md transition"
+        [ngClass]="isCheckedIn ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600'"
+        (click)="toggleCheckInOut()"
+      >
         {{ isCheckedIn ? 'Check Out' : 'Check In' }}
       </button>
     </div>
   </div>
 
   <!-- Today's Status -->
-  <div class="bg-white p-4 rounded-xl shadow flex items-center justify-between">
+  <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition duration-200 border border-gray-100 flex items-center justify-between">
     <div>
-      <p class="text-gray-500 text-sm">Today's Status</p>
-      <h3 class="text-lg font-semibold" *ngIf="todayStatus === 'PRESENT'" class="text-green-600">
+      <p class="text-gray-500 text-sm mb-1">Today's Status</p>
+      
+      <div *ngIf="todayStatus === 'PRESENT'" class="inline-flex items-center px-3 py-2 rounded-full text-md font-semibold text-green-700 bg-green-100">
         {{ todayStatus }}
-      </h3>
-      <h3 class="text-lg font-semibold" *ngIf="todayStatus !== 'PRESENT'" class="text-red-600">
+      </div>
+      <div *ngIf="todayStatus === 'ABSENT'" class="inline-flex items-center px-3 py-2 rounded-full text-md font-semibold text-red-700 bg-red-100">
         {{ todayStatus }}
-      </h3>
+      </div>
+      <div *ngIf="todayStatus === 'ON_LEAVE'" class="inline-flex items-center px-3 py-2 rounded-full text-md font-semibold text-yellow-700 bg-yellow-100">
+        {{ todayStatus }}
+      </div>
     </div>
+
     <div class="text-2xl">
-      <span *ngIf="todayStatus === 'PRESENT'" class="text-green-600">✔️</span>
-      <span *ngIf="todayStatus !== 'PRESENT'" class="text-red-600">❌</span>
+      <svg *ngIf="todayStatus === 'PRESENT'" class="w-12 h-12 text-green-600" fill="none" stroke="currentColor" stroke-width="2"
+        viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+      </svg>
+      <svg *ngIf="todayStatus === 'ABSENT'" class="w-12 h-12 text-red-600" fill="none" stroke="currentColor" stroke-width="2"
+        viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+      <svg *ngIf="todayStatus === 'ON_LEAVE'" class="w-12 h-12 text-yellow-500" fill="none" stroke="currentColor" stroke-width="2"
+        viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3" />
+      </svg>
     </div>
   </div>
 
   <!-- Working Hours -->
-  <div class="bg-white p-4 rounded-xl shadow flex items-center justify-between">
+  <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition duration-200 border border-gray-100 flex items-center justify-between">
     <div>
-      <p class="text-gray-500 text-sm">Working Hours</p>
-      <h3 class="text-lg font-semibold">{{ workingHours }}</h3>
+      <p class="text-gray-500 text-sm mb-1">Working Hours</p>
+      <h3 class="text-lg font-semibold text-gray-800">{{ workingHours }}</h3>
     </div>
-    <div class="text-blue-600 text-2xl">⏳</div>
+    <div class="text-gray-600">
+      <svg class="w-12 h-12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2" />
+        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" />
+      </svg>
+    </div>
   </div>
 </div>

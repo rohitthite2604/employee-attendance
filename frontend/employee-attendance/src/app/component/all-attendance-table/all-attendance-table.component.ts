@@ -17,7 +17,7 @@ export class AllAttendanceTableComponent {
     switch (status.toLowerCase()) {
       case 'present':
         return 'bg-green-100 text-green-800';
-      case 'late':
+      case 'on_leave':
         return 'bg-yellow-100 text-yellow-800';
       case 'absent':
         return 'bg-red-100 text-red-800';
