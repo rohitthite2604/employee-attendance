@@ -1,7 +1,7 @@
 <h2 mat-dialog-title class="text-3xl font-semibold text-center">{{ data.policy.policyType }}</h2>
 
 <mat-dialog-content class="flex justify-center">
-  <div class="w-full max-w-[850px] min-w-[850px] px-16 py-12 min-h-[1100px] bg-white p-8 rounded-md shadow-md overflow-y-auto overflow-x-hidden text-gray-800 leading-relaxed  break-words">
+  <div class="w-full max-w-[1050px] min-w-[1050px] px-16 py-12 min-h-[1100px] bg-white p-8 rounded-md shadow-md overflow-y-auto overflow-x-hidden text-gray-800 leading-relaxed  break-words">
     
     <div *ngIf="!isEditing">
       <div [innerHTML]="data.policy.content"

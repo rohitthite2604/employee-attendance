@@ -15,7 +15,10 @@
 
   <!-- Sidebar Header -->
   <div class="p-6 flex justify-center items-center mr-8">
-    <h5 class="text-2xl font-extrabold tracking-widest text-white drop-shadow-lg" *ngIf="!isCollapsed">
+    <h5 
+      class="text-2xl font-extrabold tracking-widest bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent drop-shadow-lg"
+      *ngIf="!isCollapsed"
+    >
       ATTENDANCE
     </h5>
   </div>
@@ -35,6 +38,14 @@
     class="grid place-items-center w-10 h-10 rounded-lg bg-white/20 text-white group-hover:bg-white/40 transition-all duration-500"
   >
     <i class="{{ item.icon }} text-lg"></i>
+  </div>
+
+  <!-- Tooltip (when collapsed) -->
+  <div 
+    *ngIf="isCollapsed"
+    class="absolute left-full ml-2 px-3 py-1 text-sm text-white bg-gray-700 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-50 whitespace-nowrap"
+  >
+    {{ item.name }}
   </div>
 
 

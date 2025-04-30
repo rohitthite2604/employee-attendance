@@ -49,9 +49,6 @@ export class AttendanceTableComponent implements OnInit {
       if (!hasToday) {
         records.push({
           date: today,
-          checkIn: '--',
-          checkOut: '--',
-          duration: '--',
           status: 'ABSENT'
         } as AttendanceRecord);
       }
