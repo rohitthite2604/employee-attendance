@@ -1,11 +1,11 @@
 package com.example.employee_attendance.service;
 
+import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -78,8 +78,47 @@ public class AttendanceService {
         );
     }
 
-    public List<Attendance> getUserAttendance(Long userId){
-        return attendanceRepository.findAllByUserId(userId);
+    public List<Attendance> getUserAttendance(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        List<Attendance> existingRecords = attendanceRepository.findAllByUserId(userId);
+        LocalDate startDate = user.getDateOfJoining();
+        LocalDate today = LocalDate.now();
+        LocalDate yesterday = today.minusDays(1);
+
+        Set<LocalDate> existingDates = existingRecords.stream()
+                .map(Attendance::getDate)
+                .collect(Collectors.toSet());
+
+        List<Attendance> newRecords = new ArrayList<>();
+
+        for (LocalDate date = startDate; !date.isAfter(yesterday); date = date.plusDays(1)) {
+            if (!existingDates.contains(date)) {
+                Attendance record = new Attendance();
+                record.setUser(user);
+                record.setDate(date);
+
+                DayOfWeek dayOfWeek = date.getDayOfWeek();
+                if (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY) {
+                    record.setStatus(AttendanceStatus.WEEKLY_OFF);
+                } else {
+                    record.setStatus(AttendanceStatus.ABSENT);
+                }
+
+                newRecords.add(record);
+            }
+        }
+
+        if (!newRecords.isEmpty()) {
+            attendanceRepository.saveAll(newRecords);
+            existingRecords.addAll(newRecords);
+        }
+
+        // Sort records by date descending
+        existingRecords.sort(Comparator.comparing(Attendance::getDate).reversed());
+
+        return existingRecords;
     }
 
     public List<Attendance> getAllAttendance(){

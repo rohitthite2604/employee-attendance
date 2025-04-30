@@ -49,7 +49,12 @@ export class EmpDashboardCardsComponent implements OnInit {
 
   startClock(): void {
     this.intervalId = setInterval(() => {
-      this.currentTime = new Date().toLocaleTimeString(); // Update the current time every second
+      this.currentTime = new Date().toLocaleTimeString('en-US', {
+        hour: 'numeric',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+      }); // Update the current time every second
     }, 1000);
   }
 

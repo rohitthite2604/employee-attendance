@@ -51,9 +51,12 @@ export class AttendanceTableComponent implements OnInit {
 
       // If no record for today, push a default ABSENT record
       if (!hasToday) {
+        const dayOfWeek = new Date().getDay(); // 0=Sun, 6=Sat
+        const status = (dayOfWeek === 0 || dayOfWeek === 6) ? 'WEEKLY_OFF' : 'ABSENT';
+      
         records.push({
           date: today,
-          status: 'ABSENT'
+          status
         } as AttendanceRecord);
       }
 

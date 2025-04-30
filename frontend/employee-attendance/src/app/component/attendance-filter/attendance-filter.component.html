@@ -1,5 +1,6 @@
 <div class="p-6">
 <div class="bg-white p-4 rounded-lg shadow-md min-w-sm flex items-center justify-between mb-4">
+  <div>
   <input
     type="text"
     [(ngModel)]="searchText"
@@ -8,11 +9,12 @@
     class="border p-2 rounded-lg mr-4"
   />
   <select class="border p-2 rounded-lg" (change)="onFilterChange($event)">
-    <option value="all">All Time</option>
+    <option value="all">All days</option>
     <option value="7">Last 7 days</option>
     <option value="30">Last 30 days</option>
     <option value="1">Last 1 day</option>
   </select>
+</div>
 
   <div>
     <button class="bg-green-300 px-4 py-2 rounded-lg mr-2 cursor-pointer" (click)="exportToExcel(records)">Export to Excel</button>

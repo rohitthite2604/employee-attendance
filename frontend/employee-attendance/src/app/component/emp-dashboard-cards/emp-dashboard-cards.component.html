@@ -19,41 +19,32 @@
     <div>
       <p class="text-gray-500 text-sm mb-1">Today's Status</p>
       
-      <div *ngIf="todayStatus === 'PRESENT'" class="inline-flex items-center px-3 py-2 rounded-full text-md font-semibold text-green-700 bg-green-100">
-        {{ todayStatus }}
+      <div *ngIf="todayStatus === 'PRESENT'" class="inline-flex items-center gap-2 px-3 py-2 rounded-full text-md font-semibold text-green-700 bg-green-100">
+        <i class="fas fa-user-check text-green-600"></i>{{ todayStatus }}
       </div>
-      <div *ngIf="todayStatus === 'ABSENT'" class="inline-flex items-center px-3 py-2 rounded-full text-md font-semibold text-red-700 bg-red-100">
-        {{ todayStatus }}
+      <div *ngIf="todayStatus === 'ABSENT'" class="inline-flex items-center gap-2 px-3 py-2 rounded-full text-md font-semibold text-red-700 bg-red-100">
+        <i class="fas fa-user-times text-red-600"></i>{{ todayStatus }}
       </div>
-      <div *ngIf="todayStatus === 'ON_LEAVE'" class="inline-flex items-center px-3 py-2 rounded-full text-md font-semibold text-yellow-700 bg-yellow-100">
-        {{ todayStatus }}
+      <div *ngIf="todayStatus === 'ON_LEAVE'" class="inline-flex items-center gap-2 px-3 py-2 rounded-full text-md font-semibold text-yellow-700 bg-yellow-100">
+        <i class="fas fa-umbrella-beach text-yellow-500"></i>{{ todayStatus }}
       </div>
     </div>
 
-    <div class="text-2xl">
-      <svg *ngIf="todayStatus === 'PRESENT'" class="w-12 h-12 text-green-600" fill="none" stroke="currentColor" stroke-width="2"
-        viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-      </svg>
-      <svg *ngIf="todayStatus === 'ABSENT'" class="w-12 h-12 text-red-600" fill="none" stroke="currentColor" stroke-width="2"
-        viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-      </svg>
-      <i *ngIf="todayStatus === 'ON_LEAVE'" class="fas fa-umbrella-beach text-yellow-500 text-4xl"></i>
+    <div class="text-4xl">
+      <i *ngIf="todayStatus === 'PRESENT'" class="fas fa-check-circle text-green-500"></i>
+    <i *ngIf="todayStatus === 'ABSENT'" class="fas fa-times-circle text-red-500"></i>
+    <i *ngIf="todayStatus === 'ON_LEAVE'" class="fas fa-umbrella-beach text-yellow-500"></i>
     </div>
   </div>
 
   <!-- Working Hours -->
   <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition duration-200 border border-gray-100 flex items-center justify-between">
     <div>
-      <p class="text-gray-500 text-sm mb-1">Working Hours</p>
+      <p class="text-gray-500 text-sm mb-1">Work Hours</p>
       <h3 class="text-lg font-semibold text-gray-800">{{ workingHours }}</h3>
     </div>
-    <div class="text-gray-600">
-      <svg class="w-12 h-12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2" />
-        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" />
-      </svg>
+    <div class="text-blue-600 text-4xl">
+      <i class="fas fa-clock"></i>
     </div>
   </div>
 </div>
