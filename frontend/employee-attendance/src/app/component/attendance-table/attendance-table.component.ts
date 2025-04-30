@@ -4,10 +4,11 @@ import { AttendanceRecord, AttendanceService } from '../../service/attendance.se
 import { AuthService } from '../../service/auth.service';
 import { Subscription } from 'rxjs';
 import { formatDate, formatDuration, formatTime } from '../../utils/formatting.utils';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-attendance-table',
-  imports: [NgClass, NgFor],
+  imports: [NgClass, NgFor, MatPaginatorModule],
   templateUrl: './attendance-table.component.html',
   styleUrl: './attendance-table.component.css'
 })
@@ -18,6 +19,9 @@ export class AttendanceTableComponent implements OnInit {
   attendanceRecords: AttendanceRecord[] = [];
   userId: number = 0;
   private attendanceSubscription: Subscription | null = null;
+  pageSize = 5;
+  pageIndex = 0;
+  paginatedRecords: AttendanceRecord[] = [];
 
   constructor(private attendanceService: AttendanceService, private authService: AuthService) {}
 
@@ -78,6 +82,8 @@ export class AttendanceTableComponent implements OnInit {
           checkOut: record.checkOut ? formatTime(record.checkOut) : '--',
           duration: record.duration ? formatDuration(record.duration) : '--'
         }));
+
+      this.updatePaginatedRecords();
       },
       (error) => {
         console.error('Failed to load attendance records', error);
@@ -107,6 +113,18 @@ export class AttendanceTableComponent implements OnInit {
 
     }
 
+  }
+
+  onPageChange(event: PageEvent): void {
+    this.pageSize = event.pageSize;
+    this.pageIndex = event.pageIndex;
+    this.updatePaginatedRecords();
+  }
+  
+  updatePaginatedRecords(): void {
+    const start = this.pageIndex * this.pageSize;
+    const end = start + this.pageSize;
+    this.paginatedRecords = this.attendanceRecords.slice(start, end);
   }
 
 }

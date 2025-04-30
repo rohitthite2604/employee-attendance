@@ -14,7 +14,7 @@
     </thead>
     <tbody>
       <tr
-        *ngFor="let request of leaveRequestsByUser"
+        *ngFor="let request of paginatedLeaveRequestsByUser"
         class="bg-white border-b text-black dark:bg-gray-100 dark:border-gray-500 hover:bg-gray-50 dark:hover:bg-gray-200"
       >
         <td class="px-6 py-4">{{ request.employee.userName }}</td>
@@ -38,4 +38,10 @@
       </tr>
     </tbody>
   </table>
+  <mat-paginator 
+  [length]="leaveRequestsByUser.length"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="[5, 10, 20]"
+  (page)="onPageChange($event)">
+</mat-paginator>
 </div>

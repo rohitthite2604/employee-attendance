@@ -3,16 +3,21 @@ import { LeaveRequestByUser, LeaveRequestService } from '../../service/leave-req
 import { AuthService } from '../../service/auth.service';
 import { NgClass, NgFor } from '@angular/common';
 import { formatDate } from '../../utils/formatting.utils';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-leave-status',
-  imports: [NgClass, NgFor],
+  imports: [NgClass, NgFor, MatPaginatorModule],
   templateUrl: './leave-status.component.html',
   styleUrl: './leave-status.component.css'
 })
 export class LeaveStatusComponent implements OnInit{
   userId = 0;
   leaveRequestsByUser: LeaveRequestByUser[] = [];
+  pageSize = 5;
+  pageIndex = 0;
+  paginatedLeaveRequestsByUser: LeaveRequestByUser[] = [];
+
   
   constructor(private leaveRequestService: LeaveRequestService, private authService: AuthService) {}
 
@@ -34,11 +39,23 @@ export class LeaveStatusComponent implements OnInit{
           startDate: formatDate(request.startDate),
           endDate: formatDate(request.endDate)
       }));
+      this.updatePaginatedLeaveRequests();
       },
       (error) => {
         console.error('Error fetching leave requests:', error);
       }
     );
+  }
+
+  updatePaginatedLeaveRequests(): void {
+    const startIndex = this.pageIndex * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.paginatedLeaveRequestsByUser = this.leaveRequestsByUser.slice(startIndex, endIndex);
+  }
+  onPageChange(event: PageEvent): void {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.updatePaginatedLeaveRequests();
   }
   
 

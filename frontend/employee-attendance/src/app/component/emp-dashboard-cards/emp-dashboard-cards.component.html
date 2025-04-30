@@ -5,7 +5,7 @@
     <div class="flex justify-between items-center flex-wrap">
       <h2 class="sm:text-2xl lg:text-3xl font-semibold text-gray-800">{{ currentTime }}</h2>
       <button
-        class="mt-3 px-5 py-2 text-white font-medium rounded-lg shadow-md transition"
+        class="mt-3 px-5 py-2 text-white font-medium rounded-lg shadow-md transition cursor-pointer"
         [ngClass]="isCheckedIn ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600'"
         (click)="toggleCheckInOut()"
       >
