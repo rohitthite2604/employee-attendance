@@ -1,6 +1,7 @@
 package com.example.employee_attendance.repository;
 
 import com.example.employee_attendance.model.LeaveCount;
+import com.example.employee_attendance.model.LeaveType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,4 +16,6 @@ public interface LeaveCountRepository extends JpaRepository<LeaveCount, Long> {
     Optional<LeaveCount> findByUser_UserIdAndLeaveType_LtId(Long userId, Long ltId);
 
     List<LeaveCount> findByUser_UserId(Long userId);
+
+    List<LeaveCount> findByLeaveType(LeaveType leaveType);
 }
